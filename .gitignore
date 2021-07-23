@@ -1,0 +1,10 @@
+*.fa
+*.fa.gz
+*.fasta
+*.fasta.gz
+*.fastq
+*.fastq.gz
+*.gem
+*.info
+*.log
+*.vimtags
