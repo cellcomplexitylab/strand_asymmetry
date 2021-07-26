@@ -52,27 +52,27 @@ def extract_reads_from_PE_fastq(fname_iPCR_PE1, fname_iPCR_PE2, flag):
    # the CT mismatch. Other files can be properly demultiplexed.
    if flag == 'CA_GT_GA':
       outfiles = {
-         ('CA','AAC'): open('CA_AAC.fasta', 'w'),
-         ('CA','ACA'): open('CA_ACA.fasta', 'w'),
-         ('CA','AGG'): open('CA_AGG.fasta', 'w'),
-         ('CA','TTC'): open('CA_TTC.fasta', 'w'),
+         ('CA','AAC'): gzip.open('CA_AAC.fasta.gz', 'w'),
+         ('CA','ACA'): gzip.open('CA_ACA.fasta.gz', 'w'),
+         ('CA','AGG'): gzip.open('CA_AGG.fasta.gz', 'w'),
+         ('CA','TTC'): gzip.open('CA_TTC.fasta.gz', 'w'),
 
-         ('GT','ACT'): open('GT_ACT.fasta', 'w'),
-         ('GT','ATC'): open('GT_ATC.fasta', 'w'),
-         ('GT','TGA'): open('GT_TGA.fasta', 'w'),
-         ('GT','TGT'): open('GT_TGT.fasta', 'w'),
+         ('GT','ACT'): gzip.open('GT_ACT.fasta.gz', 'w'),
+         ('GT','ATC'): gzip.open('GT_ATC.fasta.gz', 'w'),
+         ('GT','TGA'): gzip.open('GT_TGA.fasta.gz', 'w'),
+         ('GT','TGT'): gzip.open('GT_TGT.fasta.gz', 'w'),
 
-         ('GA','ATT'): open('GA_ATT.fasta', 'w'),
-         ('GA','CCG'): open('GA_CCG.fasta', 'w'),
-         ('GA','TAA'): open('GA_TAA.fasta', 'w'),
-         ('GA','TGC'): open('GA_TGC.fasta', 'w'),
+         ('GA','ATT'): gzip.open('GA_ATT.fasta.gz', 'w'),
+         ('GA','CCG'): gzip.open('GA_CCG.fasta.gz', 'w'),
+         ('GA','TAA'): gzip.open('GA_TAA.fasta.gz', 'w'),
+         ('GA','TGC'): gzip.open('GA_TGC.fasta.gz', 'w'),
       }
    elif flag == 'TC':
       outfiles = {
-         ('TC','ACT'): open('TC_ACT.fasta', 'w'),
-         ('TC','AAC'): open('TC_AAC.fasta', 'w'),
-         ('TC','CCG'): open('TC_CCG.fasta', 'w'),
-         ('TC','TTC'): open('TC_TTC.fasta', 'w'),
+         ('TC','ACT'): gzip.open('TC_ACT.fasta.gz', 'w'),
+         ('TC','AAC'): gzip.open('TC_AAC.fasta.gz', 'w'),
+         ('TC','CCG'): gzip.open('TC_CCG.fasta.gz', 'w'),
+         ('TC','TTC'): gzip.open('TC_TTC.fasta.gz', 'w'),
       }
    else:
       raise Exception('wrong flag')

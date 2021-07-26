@@ -6,5 +6,6 @@
 *.fastq.gz
 *.gem
 *.info
+*.ins
 *.log
 *.vimtags

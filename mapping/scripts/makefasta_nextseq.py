@@ -25,8 +25,8 @@ def extract_reads_from_PE_fastq(fname_iPCR_PE1, fname_iPCR_PE2):
    # experiment is sequenced (must be CT).
    matcher = seeq.compile('CGCTAATTAATGGAATCATG', 3)
 
-   outf1 = open('CT_TCT.fasta', 'w')
-   outf2 = open('CT_ACG.fasta', 'w')
+   outf1 = gzip.open('CT_TCT.fasta.gz', 'w')
+   outf2 = gzip.open('CT_ACG.fasta.gz', 'w')
 
    # There are many errors in the index, especially in the
    # first base. The most frequent errors are hard coded

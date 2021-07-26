@@ -1,8 +1,8 @@
 DOCKER_RUN= docker run --rm -v $$(pwd):/tmp -u$$(id -u):$$(id -g) ff
 
 INSERTIONS = \
-	CT1.ins CA1.ins GT1.ins GA1.ins \
-	CT2.ins CA2.ins GT2.ins GA2.ins \
+	CT1.ins CT2.ins \
+	CA1.ins CA2.ins GT1.ins GT2.ins GA1.ins GA2.ins \
 	TC1.ins TC2.ins
 
 TARGETS= $(INSERTIONS) black.lst
@@ -22,72 +22,70 @@ TC2= TC_TTC TC_CCG
 # a pattern rule with multiple targets, which is the
 # only way to tell Make that all fasta files are generated
 # by the same command.
-FASTA= $(addsuffix %fasta, $(CA1) $(GT1) $(GA1) $(CT1) \
-       $(CA2) $(GT2) $(GA2) $(CT2) $(TC1) $(TC2))
-
-iPCR_FASTQ= iPCR1_read1.fastq.gz iPCR1_read2.fastq.gz \
-	    iPCR2_read1.fastq.gz iPCR2_read2.fastq.gz \
-	    iPCR3_read1.fastq.gz iPCR3_read2.fastq.gz
+FASTA_BATCH_1= $(addsuffix %fasta.gz, $(CT1) $(CT2))
+FASTA_BATCH_2= $(addsuffix %fasta.gz, $(CA1) $(CA2) $(GT1) $(GT2) $(GA1) $(GA2))
+FASTA_BATCH_3= $(addsuffix %fasta.gz, $(TC1) $(TC2))
 
 all: $(TARGETS)
 
-mm9_pT2_unmasked.fa:
-	wget https://hgdownload.cse.ucsc.edu/goldenPath/mm9/bigZips/mm9.fa.gz
-	zcat mm9.fa.gz pT2.fa.gz > mm9_pT2_unmasked.fa
+mm9_pT2_unmasked.fasta.gz:
+	$(DOCKER_RUN) wget -q https://hgdownload.cse.ucsc.edu/goldenPath/mm9/bigZips/mm9.fa.gz -O $@
+	$(DOCKER_RUN) cat pT2.fa.gz >> $@
 
-mm9_pT2_unmasked.gem: mm9_pT2_unmasked.fa
-	$(DOCKER_RUN) gem-indexer -i $< -o mm9_pT2_unmasked
-
+mm9_pT2_unmasked.gem: mm9_pT2_unmasked.fasta.gz
+	$(DOCKER_RUN) gunzip mm9_pT2_unmasked -c > tmp-genome.fasta
+	$(DOCKER_RUN) gem-indexer -i tmp-genome.fasta -o mm9_pT2_unmasked
+	$(DOCKER_RUN) rm tmp-genome.fasta
 
 # Download 86 GB of data from the European Nucleotide Archive.
 iPCR1_read1.fastq.gz:
-	wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR105/049/SRR10564749/SRR10564749_1.fastq.gz -O iPCR1_read1.fastq.gz && \
-	md5sum iPCR1_read1.fastq.gz | grep 47eb08d47327de2e46e0175a5fb39c23
+	$(DOCKER_RUN) wget -q ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR105/049/SRR10564749/SRR10564749_1.fastq.gz -O $@
+	$(DOCKER_RUN) /bin/bash -c "md5sum $@ | grep 47eb08d47327de2e46e0175a5fb39c23"
 iPCR1_read2.fastq.gz:
-	wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR105/049/SRR10564749/SRR10564749_2.fastq.gz -O iPCR1_read2.fastq.gz && \
-	md5sum iPCR1_read2.fastq.gz | grep f99a29fe459a3e9649399998faedb5f4
+	$(DOCKER_RUN) wget -q ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR105/049/SRR10564749/SRR10564749_2.fastq.gz -O $@
+	$(DOCKER_RUN) /bin/bash -c "md5sum $@ | grep f99a29fe459a3e9649399998faedb5f4"
 iPCR2_read1.fastq.gz:
-	wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR105/050/SRR10564750/SRR10564750_1.fastq.gz -O iPCR2_read1.fastq.gz && \
-	md5sum iPCR2_read1.fastq.gz | grep 30dcc4f681f98189a6dd3138b4f85399
+	$(DOCKER_RUN) wget -q ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR105/050/SRR10564750/SRR10564750_1.fastq.gz -O $@
+	$(DOCKER_RUN) /bin/bash -c "md5sum $@ | grep 30dcc4f681f98189a6dd3138b4f85399"
 iPCR2_read2.fastq.gz:
-	wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR105/050/SRR10564750/SRR10564750_2.fastq.gz -O iPCR2_read2.fastq.gz && \
-	md5sum iPCR2_read2.fastq.gz | grep 8dccba2efbb71294babaa05ab791c31c
+	$(DOCKER_RUN) wget -q ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR105/050/SRR10564750/SRR10564750_2.fastq.gz -O $@
+	$(DOCKER_RUN) /bin/bash -c "md5sum $@ | grep 8dccba2efbb71294babaa05ab791c31c"
 iPCR3_read1.fastq.gz:
-	wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR105/051/SRR10564751/SRR10564751_1.fastq.gz -O iPCR3_read1.fastq.gz && \
-	md5sum iPCR3_read1.fastq.gz | grep 54a1d6b9535ea9b99dce15363b9c1855
+	$(DOCKER_RUN) wget -q ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR105/051/SRR10564751/SRR10564751_1.fastq.gz -O $@
+	$(DOCKER_RUN) /bin/bash -c "md5sum $@ | grep 54a1d6b9535ea9b99dce15363b9c1855"
 iPCR3_read2.fastq.gz:
-	wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR105/051/SRR10564751/SRR10564751_2.fastq.gz -O iPCR3_read2.fastq.gz && \
-	md5sum iPCR3_read2.fastq.gz | grep d09a4512788c9c9b816ce8aca079417f
+	$(DOCKER_RUN) wget -q ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR105/051/SRR10564751/SRR10564751_2.fastq.gz -O $@
+	$(DOCKER_RUN) /bin/bash -c "md5sum $@ | grep d09a4512788c9c9b816ce8aca079417f"
 
-# This creates all fasta files (see definition of 'FASTA').
-$(FASTA): $(iPCR_FASTQ)
-	$(DOCKER_RUN) python makefasta_nextseq.py iPCR1_read1.fastq.gz iPCR1_read2.fastq.gz
-	$(DOCKER_RUN) python makefasta_hiseq.py iPCR2_read1.fastq.gz iPCR2_read2.fastq.gz CA_GT_GA
-	$(DOCKER_RUN) python makefasta_hiseq.py iPCR3_read1.fastq.gz iPCR3_read2.fastq.gz TC
+# This creates all fasta files for extra 10 GB on disk.
+$(FASTA_BATCH_1): iPCR1_1.fastq.gz iPCR1_2.fastq.gz
+	$(DOCKER_RUN) python scripts/makefasta_nextseq.py $^
+$(FASTA_BATCH_2): iPCR2_1.fastq.gz iPCR2_2.fastq.gz
+	$(DOCKER_RUN) python scripts/makefasta_hiseq.py $^ CA_GT_GA
+$(FASTA_BATCH_3): iPCR3_1.fastq.gz iPCR3_2.fastq.gz
+	$(DOCKER_RUN) python scripts/makefasta_hiseq.py $^ TC
 
-#%.map: %.fasta
-#	gem-mapper -I /data/mm10_pT2_unmasked.gem \
-#		-q ignore --unique-mapping -T4 -i $< > $@
-%.map.gz: %.fasta mm9_pT2_unmasked.gem
-	$(DOCKER_RUN) gem-mapper -I mm9_pT2_unmasked.gem \
-		-q ignore --unique-mapping -T4 -i $< | gzip > $@
-
+# Map individual files.
+%.map.gz: %.fasta.gz mm9_pT2_unmasked.gem
+	$(DOCKER_RUN) gunzip $< -c > tmp-$*.fasta
+	$(DOCKER_RUN) /bin/bash -c "gem-mapper -I mm9_pT2_unmasked.gem -q ignore --unique-mapping -T4 -i tmp-$*.fasta | gzip > $@"
+	$(DOCKER_RUN) rm tmp-$*.fasta
 
 .SECONDARY:
-%.stc: %.map.gz
-	$(DOCKER_RUN) zcat $< | cut -f1 | starcode -t4 -d2 --print-clusters -o $@
+%.stc.gz: %.map.gz
+	$(DOCKER_RUN) /bin/bash -c "zcat $< | cut -f1 | starcode -t4 -d2 --print-clusters | gzip > $@"
 
 # The secondary expansions will allow to replace the matching
 # stem of the rule by the variables declared above.
 .SECONDEXPANSION:
-%.ins: $$(addsuffix .map.gz, $$($$*)) $$(addsuffix .stc, $$($$*))
-	$(DOCKER_RUN) python collect.py $^ > $@
+%.ins: $$(addsuffix .map.gz, $$($$*)) $$(addsuffix .stc.gz, $$($$*))
+	$(DOCKER_RUN) python scripts/collect.py $^ > $@
 
 black.lst: $(INSERTIONS)
-	$(DOCKER_RUN) python make_blacklist.py $^ > $@
+	$(DOCKER_RUN) python scripts/make_blacklist.py $^ > $@
 
 cleantmp:
-	rm -f *.fa *.map.gz *.stc
+	rm -f *.fa *.map.gz *.stc.gz
 
 clean:
-	rm -f *fasta *.map.gz *.stc *.ins *.bcd
+	rm -f *fasta.gz *.map.gz *.stc *.ins *.bcd

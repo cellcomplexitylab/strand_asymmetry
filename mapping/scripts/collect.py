@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 
 # Standard library packages.
+import gzip
 import os
 import re
 import sys
@@ -12,10 +13,7 @@ from itertools import izip
 # Others.
 import seeq
 
-from gzopen import gzopen
-
-#FASTASEQ = "/data/mm10_pT2.fasta"
-FASTASEQ = "/data/mm9_pT2.fasta"
+FASTASEQ = "mm9_pT2_unmasked.fasta.gz"
 LOGFNAME = 'tripelog.txt'
 
 class FormatException(Exception):
@@ -50,7 +48,7 @@ def collect_integrations(mapfnames, stcfnames, genome):
    # Open all provided starcode files and create a
    # replacement dictionary.
    for fname in stcfnames:
-      with gzopen(fname) as f:
+      with open(fname) as f:
          update(canonical, f)
 
 
@@ -61,7 +59,7 @@ def collect_integrations(mapfnames, stcfnames, genome):
    counts = defaultdict(lambda: defaultdict(int))
 
    for fname in mapfiles:
-      with gzopen(fname) as f:
+      with gzip.open(fname) as f:
          for line in f:
             items = line.rstrip().split('\t')
             try:
@@ -136,12 +134,12 @@ def compute_GC(chrom, pos, genome):
 
 if __name__ == '__main__':
    # Import the mouse genome and make a dictionary out of it.
-   with open(FASTASEQ) as f:
-      mm10 = read_genome(f)
+   with gzip.open(FASTASEQ) as f:
+      mm9 = read_genome(f)
 
    # Expects an array of .map files followed by an array
    # of .stc files. Use the extensions to sort them out.
    mapfiles = [f for f in sys.argv[1:] if '.map' in f]
    stcfiles = [f for f in sys.argv[1:] if '.stc' in f]
 
-   collect_integrations(mapfiles, stcfiles, mm10)
+   collect_integrations(mapfiles, stcfiles, mm9)
