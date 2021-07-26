@@ -14,7 +14,7 @@ from itertools import izip
 import seeq
 
 FASTASEQ = "mm9_pT2_unmasked.fasta.gz"
-LOGFNAME = 'tripelog.txt'
+LOGFNAME = 'mappinglog.txt'
 
 class FormatException(Exception):
    pass
@@ -48,7 +48,7 @@ def collect_integrations(mapfnames, stcfnames, genome):
    # Open all provided starcode files and create a
    # replacement dictionary.
    for fname in stcfnames:
-      with open(fname) as f:
+      with gzip.open(fname) as f:
          update(canonical, f)
 
 
@@ -139,7 +139,7 @@ if __name__ == '__main__':
 
    # Expects an array of .map files followed by an array
    # of .stc files. Use the extensions to sort them out.
-   mapfiles = [f for f in sys.argv[1:] if '.map' in f]
-   stcfiles = [f for f in sys.argv[1:] if '.stc' in f]
+   mapfiles = [f for f in sys.argv[1:] if '.map.gz' in f]
+   stcfiles = [f for f in sys.argv[1:] if '.stc.gz' in f]
 
    collect_integrations(mapfiles, stcfiles, mm9)

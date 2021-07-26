@@ -8,4 +8,6 @@
 *.info
 *.ins
 *.log
+*.map.gz
+*.stc.gz
 *.vimtags

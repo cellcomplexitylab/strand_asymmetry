@@ -21,58 +21,58 @@ def extract_reads_from_PE_fastq(fname_iPCR_PE1, fname_iPCR_PE2, flag):
    barcode making sure that the other read contains the transposon."""
 
    # Those are the scarcodes that allow to identify which
-   # experiment is sequenced (CA, GA, GT or TC mismatch).
-   if flag == 'CA_GT_GA':
+   # experiment is sequenced (T:G, A:C, T:C or C:A mismatch).
+   if flag == 'TG_AC_TC':
       matchers = {
-         'CA': seeq.compile('GCTAGCAGTCAGGAATCATG', 3),
-         'GA': seeq.compile('GCTAGCTCGTTGGAATCATG', 3),
-         'GT': seeq.compile('GCTAGCTCCGCAGAATCATG', 3),
+         'TG': seeq.compile('GCTAGCAGTCAGGAATCATG', 3),
+         'AC': seeq.compile('GCTAGCTCCGCAGAATCATG', 3),
+         'TC': seeq.compile('GCTAGCTCGTTGGAATCATG', 3),
       }
-   elif flag == 'TC':
+   elif flag == 'CA':
       matchers = {
-         'TC': seeq.compile('GCTAGCGCGCGTGAATCATG', 3),
+         'CA': seeq.compile('GCTAGCGCGCGTGAATCATG', 3),
       }
    else:
       raise Exception('wrong flag')
    
-   if flag == 'CA_GT_GA':
+   if flag == 'TG_AC_TC':
       indexes = {
-         'CA': frozenset(['AAC', 'ACA', 'AGG', 'TTC']),
-         'GA': frozenset(['ATT', 'CCG', 'TAA', 'TGC']),
-         'GT': frozenset(['ACT', 'ATC', 'TGA', 'TGT']),
+         'TG': frozenset(['AAC', 'ACA', 'AGG', 'TTC']),
+         'AC': frozenset(['ACT', 'ATC', 'TGA', 'TGT']),
+         'TC': frozenset(['ATT', 'CCG', 'TAA', 'TGC']),
       }
-   elif flag == 'TC':
+   elif flag == 'CA':
       indexes = {
-         'TC': frozenset(['ACT', 'AAC', 'CCG', 'TTC']),
+         'CA': frozenset(['ACT', 'AAC', 'CCG', 'TTC']),
       }
    else:
       raise Exception('wrong flag')
 
    # Assign all valid triplets to a single fasta file for
    # the CT mismatch. Other files can be properly demultiplexed.
-   if flag == 'CA_GT_GA':
+   if flag == 'TG_AC_TC':
       outfiles = {
-         ('CA','AAC'): gzip.open('CA_AAC.fasta.gz', 'w'),
-         ('CA','ACA'): gzip.open('CA_ACA.fasta.gz', 'w'),
-         ('CA','AGG'): gzip.open('CA_AGG.fasta.gz', 'w'),
-         ('CA','TTC'): gzip.open('CA_TTC.fasta.gz', 'w'),
+         ('TG','AAC'): gzip.open('TG_AAC.fasta.gz', 'w'),
+         ('TG','ACA'): gzip.open('TG_ACA.fasta.gz', 'w'),
+         ('TG','AGG'): gzip.open('TG_AGG.fasta.gz', 'w'),
+         ('TG','TTC'): gzip.open('TG_TTC.fasta.gz', 'w'),
 
-         ('GT','ACT'): gzip.open('GT_ACT.fasta.gz', 'w'),
-         ('GT','ATC'): gzip.open('GT_ATC.fasta.gz', 'w'),
-         ('GT','TGA'): gzip.open('GT_TGA.fasta.gz', 'w'),
-         ('GT','TGT'): gzip.open('GT_TGT.fasta.gz', 'w'),
+         ('AC','ACT'): gzip.open('AC_ACT.fasta.gz', 'w'),
+         ('AC','ATC'): gzip.open('AC_ATC.fasta.gz', 'w'),
+         ('AC','TGA'): gzip.open('AC_TGA.fasta.gz', 'w'),
+         ('AC','TGT'): gzip.open('AC_TGT.fasta.gz', 'w'),
 
-         ('GA','ATT'): gzip.open('GA_ATT.fasta.gz', 'w'),
-         ('GA','CCG'): gzip.open('GA_CCG.fasta.gz', 'w'),
-         ('GA','TAA'): gzip.open('GA_TAA.fasta.gz', 'w'),
-         ('GA','TGC'): gzip.open('GA_TGC.fasta.gz', 'w'),
-      }
-   elif flag == 'TC':
-      outfiles = {
-         ('TC','ACT'): gzip.open('TC_ACT.fasta.gz', 'w'),
-         ('TC','AAC'): gzip.open('TC_AAC.fasta.gz', 'w'),
+         ('TC','ATT'): gzip.open('TC_ATT.fasta.gz', 'w'),
          ('TC','CCG'): gzip.open('TC_CCG.fasta.gz', 'w'),
-         ('TC','TTC'): gzip.open('TC_TTC.fasta.gz', 'w'),
+         ('TC','TAA'): gzip.open('TC_TAA.fasta.gz', 'w'),
+         ('TC','TGC'): gzip.open('TC_TGC.fasta.gz', 'w'),
+      }
+   elif flag == 'CA':
+      outfiles = {
+         ('CA','ACT'): gzip.open('CA_ACT.fasta.gz', 'w'),
+         ('CA','AAC'): gzip.open('CA_AAC.fasta.gz', 'w'),
+         ('CA','CCG'): gzip.open('CA_CCG.fasta.gz', 'w'),
+         ('CA','TTC'): gzip.open('CA_TTC.fasta.gz', 'w'),
       }
    else:
       raise Exception('wrong flag')

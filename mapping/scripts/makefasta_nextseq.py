@@ -22,11 +22,11 @@ def extract_reads_from_PE_fastq(fname_iPCR_PE1, fname_iPCR_PE2):
    transposon."""
 
    # This is the scarcode that allows to identify which
-   # experiment is sequenced (must be CT).
+   # experiment is sequenced (must be G:A).
    matcher = seeq.compile('CGCTAATTAATGGAATCATG', 3)
 
-   outf1 = gzip.open('CT_TCT.fasta.gz', 'w')
-   outf2 = gzip.open('CT_ACG.fasta.gz', 'w')
+   outf1 = gzip.open('AG_TCT.fasta.gz', 'w')
+   outf2 = gzip.open('AG_ACG.fasta.gz', 'w')
 
    # There are many errors in the index, especially in the
    # first base. The most frequent errors are hard coded
