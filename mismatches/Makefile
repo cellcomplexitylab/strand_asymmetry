@@ -142,6 +142,7 @@ TARGETS=                                \
 
 all: $(TARGETS)
 
+# Download 193 GB of sequencing data to disk.
 AC_6xPCR_24h_rep1_1.fastq.gz:
 	$(DOCKER_RUN) wget -q ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR105/023/SRR10564723/SRR10564723_1.fastq.gz -O $@
 	$(DOCKER_RUN) /bin/bash -c "md5sum $@ | grep 2e766183d21ed3e7dd1362a1183c223b"
@@ -971,6 +972,7 @@ TG_LA_no_ISceI_rep4_2.fastq.gz:
 	$(DOCKER_RUN) wget -q ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR105/048/SRR10564748/SRR10564748_2.fastq.gz -O $@
 	$(DOCKER_RUN) /bin/bash -c "md5sum $@ | grep 3100685bb564c19a3f6df14e6d642993"
 
+# 
 %.co.gz: %_1.fastq.gz %_2.fastq.gz
 	$(DOCKER_RUN) /bin/bash -c "python scripts/preprocess.py $^ | gzip > $*.pps.gz"
 	$(DOCKER_RUN) /bin/bash -c "zcat $*.pps.gz | cut -f1 | starcode -d2 --print-clusters | gzip > $*.stc.gz"

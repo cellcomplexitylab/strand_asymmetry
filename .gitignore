@@ -1,3 +1,4 @@
+*.co.gz
 *.fa
 *.fa.gz
 *.fasta
@@ -10,4 +11,5 @@
 *.log
 *.map.gz
 *.stc.gz
+*_seq.txt.gz
 *.vimtags
