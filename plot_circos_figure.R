@@ -2,7 +2,7 @@ library(GenomicRanges)
 library(RCircos)
 
 # Overwrite RCircos default fuctions.
-source("improvedRCircos.R")
+source("scripts/improvedRCircos.R")
 
 AG1 = subset(read.table("mapping/AG1.ins"), V2 != "pT2")
 AG2 = subset(read.table("mapping/AG2.ins"), V2 != "pT2")
@@ -71,7 +71,7 @@ RCircos.Reset.Plot.Parameters(rcircos.params)
 
 COL = c("#442288", "#6CA2EA", "#B5D33D", "#FED23F", "#EB7D5B")
 
-pdf("integ_circos.pdf", useDingbats=FALSE)
+pdf("figures/integ_circos.pdf", useDingbats=FALSE)
 par(mar=c(0,0,0,0))
 RCircos.Set.Plot.Area()
 #RCircos.Chromosome.Ideogram.Plot()
