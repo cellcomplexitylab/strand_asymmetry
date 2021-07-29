@@ -54,6 +54,7 @@ print(nrow(CA))
 
 
 # Take 1000 at random.
+set.seed(123)
 trackAG = AG[sample(nrow(AG),1000),c(2,4,4)]
 trackTG = TG[sample(nrow(TG),1000),c(2,4,4)]
 trackAC = AC[sample(nrow(AC),1000),c(2,4,4)]
@@ -63,7 +64,6 @@ trackCA = CA[sample(nrow(CA),1000),c(2,4,4)]
 
 rcircos.params = RCircos.Get.Plot.Parameters()
 rcircos.params$track.height = 0.08
-#rcircos.params$track.in.start = 1.05
 rcircos.params$track.in.start = 1.2
 rcircos.params$chrom.paddings = 500
 
@@ -74,7 +74,6 @@ COL = c("#442288", "#6CA2EA", "#B5D33D", "#FED23F", "#EB7D5B")
 pdf("figures/integ_circos.pdf", useDingbats=FALSE)
 par(mar=c(0,0,0,0))
 RCircos.Set.Plot.Area()
-#RCircos.Chromosome.Ideogram.Plot()
 RCircos.Draw.Chromosome.Ideogram()
 RCircos.Label.Chromosome.Names()
 Tile.Plot(trackAG, 1, "in", col=COL[1])
@@ -82,9 +81,4 @@ Tile.Plot(trackTG, 2, "in", col=COL[2])
 Tile.Plot(trackAC, 3, "in", col=COL[3])
 Tile.Plot(trackTC, 4, "in", col=COL[4])
 Tile.Plot(trackCA, 5, "in", col=COL[5])
-#RCircos.Tile.Plot(trackAG, 1, "in")
-#RCircos.Tile.Plot(trackTG, 2, "in")
-#RCircos.Tile.Plot(trackAC, 3, "in")
-#RCircos.Tile.Plot(trackTC, 4, "in")
-#RCircos.Tile.Plot(trackCA, 5, "in")
 dev.off()

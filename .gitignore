@@ -5,7 +5,9 @@
 *.fasta.gz
 *.fastq
 *.fastq.gz
+*.fpkm.txt.gz
 *.gem
+*.gtf.gz
 *.info
 *.ins
 *.log

@@ -1,3 +1,46 @@
+RCircos.Draw.Chromosome.Ideogram <- function (ideo.pos=NULL, ideo.width=NULL)
+{
+    RCircos.Cyto <- RCircos.Get.Plot.Ideogram()
+    RCircos.Pos  <- RCircos.Get.Plot.Positions()
+    RCircos.Par  <- RCircos.Get.Plot.Parameters()
+    
+    if(is.null(ideo.pos)) ideo.pos <- RCircos.Par$chr.ideo.pos;
+    if(is.null(ideo.width)) ideo.width <- RCircos.Par$chrom.width;
+    
+    #   Plot outlines for each chromosome
+    #   =================================
+    #   
+    outerPos <- ideo.pos + ideo.width;
+    innerPos <- ideo.pos;
+
+    chromosomes <- unique(RCircos.Cyto$Chromosome);
+    RCircos.Track.Outline(outerPos, innerPos, num.layers=1, chromosomes,
+            track.colors=rep("gray80", length(chromosomes)));
+#            track.colors=rep("white", length(chromosomes)));
+
+# Do not add Giemsa bands after all...
+#    #   Add chromosome bands (Giemsa stain positive only)
+#    #   ================================================
+#    #   
+#    whiteBands <- which(RCircos.Cyto$BandColor == "white");
+#   darkBands <- RCircos.Cyto; 
+#   if(length(whiteBands)>0) darkBands <- darkBands[-whiteBands, ];
+#
+#    for(aBand in seq_len(nrow(darkBands)))
+#    {   
+#        aColor <- darkBands$BandColor[aBand];
+#        aStart <- darkBands$StartPoint[aBand];
+#        aEnd   <- darkBands$EndPoint[aBand];
+#
+#        posX <- c(RCircos.Pos[aStart:aEnd,1]*outerPos, 
+#                RCircos.Pos[aEnd:aStart,1]*innerPos);
+#        posY <- c(RCircos.Pos[aStart:aEnd,2]*outerPos, 
+#                RCircos.Pos[aEnd:aStart,2]*innerPos);
+#        polygon(posX, posY, col=aColor, border=NA);
+#    }   
+}
+
+
 RCircos.Label.Chromosome.Names <- function (chr.name.pos=NULL)
 {
     RCircos.Par  <- RCircos.Get.Plot.Parameters()
@@ -32,10 +75,9 @@ RCircos.Label.Chromosome.Names <- function (chr.name.pos=NULL)
 }
 
 
-Tile.Plot = function(tile.data, track.num, side, col="black") {
+Tile.Plot = function(tile.data, track.num, side, col="black", lwd=1) {
     RCircos.Pos <- RCircos.Get.Plot.Positions()
     RCircos.Par <- RCircos.Get.Plot.Parameters()
-    #tile.data <- RCircos.Get.Plot.Data(tile.data, "plot")
     tile.data <- RCircos.Get.Single.Point.Positions(genomic.data=tile.data)
     # Pre-process data and arrange tiles in layers.
     the.layer <- 1
@@ -88,6 +130,7 @@ Tile.Plot = function(tile.data, track.num, side, col="black") {
     # Do not plot outline, just the tiles.
     # RCircos.Track.Outline(out.pos, in.pos, num.layers)
     the.loc <- ncol(tile.data)
+    tile.data$col = col
     for (a.row in 1:nrow(tile.data)) {
         tile.len <- tile.data[a.row, 3] - tile.data[a.row, 2]
         tile.range <- round(tile.len/RCircos.Par$base.per.unit/2, 
@@ -102,7 +145,7 @@ Tile.Plot = function(tile.data, track.num, side, col="black") {
         polygon.y <- c(RCircos.Pos[start:end, 2] * layer.top, 
             RCircos.Pos[end:start, 2] * layer.bot)
         # polygon(polygon.x, polygon.y, col = tile.colors[a.row])
-        polygon(polygon.x, polygon.y, col=col, border=col)
+        polygon(polygon.x, polygon.y, border=tile.data$col[a.row], lwd=lwd)
     }
 }
 
