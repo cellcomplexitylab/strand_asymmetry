@@ -5,7 +5,7 @@ INSERTIONS = \
 	TG1.ins.gz TG2.ins.gz AC1.ins.gz AC2.ins.gz TC1.ins.gz TC2.ins.gz \
 	CA1.ins.gz CA2.ins.gz
 
-TARGETS= $(INSERTIONS) black.lst.gz
+TARGETS= $(INSERTIONS)
 
 AG1= AG_ACG
 AG2= AG_TCT
@@ -87,11 +87,8 @@ $(FASTA_BATCH_3): iPCR3_1.fastq.gz iPCR3_2.fastq.gz
 %2.ins.gz: %2.ins-raw.gz %1.ins-raw.gz
 	$(DOCKER_RUN) python scripts/remove_contaminants.py $^ | gzip > $@
 
-black.lst.gz: $(INSERTIONS)
-	$(DOCKER_RUN) python scripts/make_blacklist.py $^ | gzip > $@
-
 cleantmp:
-	rm -f *.fa *.map.gz *.stc.gz
+	rm -f *.fasta.gz *.map.gz *.stc.gz
 
 clean:
 	rm -f *fasta.gz *.map.gz *.stc *.ins.gz *.bcd

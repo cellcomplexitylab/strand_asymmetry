@@ -12,14 +12,19 @@ all:
 #	+$(MAKE) -C mismatch
 #	+$(MAKE) -C figures
 
+
+
 # Base analyses
 $(INSERTIONS):
 	cd mapping && $(MAKE)
 
-barcode_view_all_events_with_mapping.txt: $(INSERTIONS) # $(MISMATCHES)
+black.lst.gz: $(INSERTIONS) # $(MISMATCHES)
+	$(DOCKER_RUN) /bin/bash scripts/make_blacklist.sh | gzip > $@
+
+barcode_view_all_events_with_mapping.txt: black.lst.gz
 	$(DOCKER_RUN) /bin/bash scripts/extract_all_events_with_mapping.sh > $@
 
-barcode_view_all_events_without_mapping.txt: $(INSERTIONS) # $(MISMATCHES)
+barcode_view_all_events_without_mapping.txt: black.lst.gz
 	$(DOCKER_RUN) /bin/bash scripts/extract_all_events_without_mapping.sh > $@
 
 stats_by_experiments_with_mapping.txt: barcode_view_all_events_with_mapping.txt
