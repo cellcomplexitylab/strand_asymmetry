@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
+import gzip
 import sys
 
 from itertools import combinations
@@ -18,7 +19,7 @@ def main(fname_list):
    # Go through the files one by one and
    # Put their barcodes in the list.
    for fname in fname_list:
-      with open(fname) as f:
+      with gzip.open(fname) as f:
          # Collect their barcodes.
          L.append(makeset(f))
 

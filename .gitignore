@@ -10,6 +10,7 @@
 *.gtf.gz
 *.info
 *.ins.gz
+*.ins-raw.gz
 *.log
 *.map.gz
 *.stc.gz

@@ -78,8 +78,14 @@ $(FASTA_BATCH_3): iPCR3_1.fastq.gz iPCR3_2.fastq.gz
 # The secondary expansions will allow to replace the matching
 # stem of the rule by the variables declared above.
 .SECONDEXPANSION:
-%.ins.gz: $$(addsuffix .map.gz, $$($$*)) $$(addsuffix .stc.gz, $$($$*))
+%.ins-raw.gz: $$(addsuffix .map.gz, $$($$*)) $$(addsuffix .stc.gz, $$($$*))
 	$(DOCKER_RUN) python scripts/collect.py $^ | gzip > $@
+
+# Remove contaminants (the order matters in the calls below).
+%1.ins.gz: %1.ins-raw.gz %2.ins-raw.gz
+	$(DOCKER_RUN) python scripts/remove_contaminants.py $^ | gzip > $@
+%2.ins.gz: %2.ins-raw.gz %1.ins-raw.gz
+	$(DOCKER_RUN) python scripts/remove_contaminants.py $^ | gzip > $@
 
 black.lst.gz: $(INSERTIONS)
 	$(DOCKER_RUN) python scripts/make_blacklist.py $^ | gzip > $@

@@ -36,6 +36,8 @@ TARGETS=                                \
 	AG_6xPCR_24h_rep4.co.gz         \
 	AG_6xPCR_48h_rep1.co.gz         \
 	AG_6xPCR_48h_rep2.co.gz         \
+	AG_6xPCR_48h_rep3.co.gz         \
+	AG_6xPCR_48h_rep4.co.gz         \
 	AG_6xPCR_no_ISceI_rep1.co.gz    \
 	AG_6xPCR_no_ISceI_rep2.co.gz    \
 	AG_6xPCR_no_ISceI_rep3.co.gz    \
@@ -120,8 +122,6 @@ TARGETS=                                \
 	TG_6xPCR_24h_rep4.co.gz         \
 	TG_6xPCR_48h_rep1.co.gz         \
 	TG_6xPCR_48h_rep2.co.gz         \
-	TG_6xPCR_48h_rep3.co.gz         \
-	TG_6xPCR_48h_rep4.co.gz         \
 	TG_6xPCR_no_ISceI_rep1.co.gz    \
 	TG_6xPCR_no_ISceI_rep2.co.gz    \
 	TG_6xPCR_no_ISceI_rep3.co.gz    \
