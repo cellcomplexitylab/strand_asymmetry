@@ -1,13 +1,24 @@
 DOCKER_RUN= docker run --rm -v $$(pwd):/tmp -u$$(id -u):$$(id -g) ff
 
-INSERTIONS:= $(addprefix mapping/, AG1.ins AG2.ins TG1.ins TG2.ins \
-	AC1.ins AC2.ins TC1.ins TC2.ins CA1.ins CA2.ins)
+INSERTIONS= $(addprefix mapping/, AG1.ins.gz AG2.ins.gz \
+	TG1.ins.gz TG2.ins.gz AC1.ins.gz AC2.ins.gz \
+	TC1.ins.gz TC2.ins.gz CA1.ins.gz CA2.ins.gz)
+
+MISMATCHES= $(addprefix mismatches., insertmismatches)
 
 all:
 	echo "$(INSERTIONS)"
 #	+$(MAKE) -C mapping
 #	+$(MAKE) -C mismatch
 #	+$(MAKE) -C figures
+
+# Base analyses
+$(INSERTIONS):
+	cd mapping && $(MAKE)
+
+barcode_view_all_events.txt: $(INSERTIONS) # $(MISMATCHES)
+	$(DOCKER_RUN) /bin/bash scripts/extract_all_events.sh > $@
+
 
 # Figure 2.
 figures/integ_circos.pdf: $(INSERTIONS)
@@ -27,13 +38,8 @@ misc/GSE93238_gene.fpkm.txt.gz:
 misc/Mus_musculus.NCBIM37.67.gtf.gz:
 	cd misc && $(MAKE) Mus_musculus.NCBIM37.67.gtf.gz
 
-
 # !!!! This part still has the original FASTQ identifers !!!!
 misc/gRNA_counts_CA1.txt:
 	$(DOCKER_RUN) python misc/gather_gRNA_counts.py mismatches/15D*co.gz mismatches/17F*.co.gz > $@
 misc/gRNA_counts_CA2.txt:
 	$(DOCKER_RUN) python misc/gather_gRNA_counts.py mismatches/16E*co.gz mismatches/18G*.co.gz > $@
-
-# Base analyses
-$(INSERTIONS):
-	cd mapping && $(MAKE)

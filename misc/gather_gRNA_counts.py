@@ -21,7 +21,6 @@ def process(group, idx):
       with gzip.open(fname) as f:
          _ = next(f) # Discard header.
          for line in f:
-            line = line.decode("ascii")
             barcode, _FF, _AT, _GC  = line.split()
             if int(_FF) >= int(_AT) and int(_FF) >= int(_GC):
                continue

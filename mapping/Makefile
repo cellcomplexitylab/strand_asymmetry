@@ -1,11 +1,11 @@
 DOCKER_RUN= docker run --rm -v $$(pwd):/tmp -u$$(id -u):$$(id -g) ff
 
 INSERTIONS = \
-	AG1.ins AG2.ins \
-	TG1.ins TG2.ins AC1.ins AC2.ins TC1.ins TC2.ins \
-	CA1.ins CA2.ins
+	AG1.ins.gz AG2.ins.gz \
+	TG1.ins.gz TG2.ins.gz AC1.ins.gz AC2.ins.gz TC1.ins.gz TC2.ins.gz \
+	CA1.ins.gz CA2.ins.gz
 
-TARGETS= $(INSERTIONS) black.lst
+TARGETS= $(INSERTIONS) black.lst.gz
 
 AG1= AG_ACG
 AG2= AG_TCT
@@ -78,14 +78,14 @@ $(FASTA_BATCH_3): iPCR3_1.fastq.gz iPCR3_2.fastq.gz
 # The secondary expansions will allow to replace the matching
 # stem of the rule by the variables declared above.
 .SECONDEXPANSION:
-%.ins: $$(addsuffix .map.gz, $$($$*)) $$(addsuffix .stc.gz, $$($$*))
-	$(DOCKER_RUN) python scripts/collect.py $^ > $@
+%.ins.gz: $$(addsuffix .map.gz, $$($$*)) $$(addsuffix .stc.gz, $$($$*))
+	$(DOCKER_RUN) python scripts/collect.py $^ | gzip > $@
 
-black.lst: $(INSERTIONS)
-	$(DOCKER_RUN) python scripts/make_blacklist.py $^ > $@
+black.lst.gz: $(INSERTIONS)
+	$(DOCKER_RUN) python scripts/make_blacklist.py $^ | gzip > $@
 
 cleantmp:
 	rm -f *.fa *.map.gz *.stc.gz
 
 clean:
-	rm -f *fasta.gz *.map.gz *.stc *.ins *.bcd
+	rm -f *fasta.gz *.map.gz *.stc *.ins.gz *.bcd

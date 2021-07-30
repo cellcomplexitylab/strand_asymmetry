@@ -9,7 +9,7 @@
 *.gem
 *.gtf.gz
 *.info
-*.ins
+*.ins.gz
 *.log
 *.map.gz
 *.stc.gz

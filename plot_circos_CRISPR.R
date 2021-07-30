@@ -5,8 +5,8 @@ library(GenomicRanges)
 source("scripts/improvedRCircos.R")
 
 # Keep only the first 4 columns.
-CA1 = subset(read.table("mapping/CA1.ins"), V2 != "pT2")[,1:4]
-CA2 = subset(read.table("mapping/CA2.ins"), V2 != "pT2")[,1:4]
+CA1 = subset(read.table("mapping/CA1.ins.gz"), V2 != "pT2")[,1:4]
+CA2 = subset(read.table("mapping/CA2.ins.gz"), V2 != "pT2")[,1:4]
 
 gRNA_CA1 = subset(read.table("misc/gRNA_counts_CA1.txt"), V1 %in% CA1$V1)
 gRNA_CA2 = subset(read.table("misc/gRNA_counts_CA2.txt"), V1 %in% CA2$V1)
