@@ -13,7 +13,6 @@ from itertools import izip
 # Others.
 import seeq
 
-FASTASEQ = "mm9_pT2_unmasked.fasta.gz"
 LOGFNAME = 'mappinglog.txt'
 
 class FormatException(Exception):
@@ -134,7 +133,7 @@ def compute_GC(chrom, pos, genome):
 
 if __name__ == '__main__':
    # Import the mouse genome and make a dictionary out of it.
-   with gzip.open(FASTASEQ) as f:
+   with gzip.open(sys.argv[-1]) as f:
       mm9 = read_genome(f)
 
    # Expects an array of .map files followed by an array

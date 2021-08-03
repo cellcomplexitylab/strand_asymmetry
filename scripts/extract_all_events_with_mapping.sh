@@ -57,8 +57,6 @@ python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_6xPCR_24
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_6xPCR_24h_rep4.co.gz  mapping/TC1.ins.gz  mapping/TC2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_6xPCR_48h_rep1.co.gz  mapping/TC1.ins.gz  mapping/TC2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_6xPCR_48h_rep2.co.gz  mapping/TC1.ins.gz  mapping/TC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_6xPCR_48h_rep3.co.gz  mapping/TC1.ins.gz  mapping/TC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_6xPCR_48h_rep4.co.gz  mapping/TC1.ins.gz  mapping/TC2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_LA_24h_rep1.co.gz     mapping/TC1.ins.gz  mapping/TC2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_LA_24h_rep3.co.gz     mapping/TC1.ins.gz  mapping/TC2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_LA_24h_rep4.co.gz     mapping/TC1.ins.gz  mapping/TC2.ins.gz
@@ -73,6 +71,8 @@ python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TG_6xPCR_24
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TG_6xPCR_24h_rep4.co.gz  mapping/TG1.ins.gz  mapping/TG2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TG_6xPCR_48h_rep1.co.gz  mapping/TG1.ins.gz  mapping/TG2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TG_6xPCR_48h_rep2.co.gz  mapping/TG1.ins.gz  mapping/TG2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TG_6xPCR_48h_rep3.co.gz  mapping/TG1.ins.gz  mapping/TG2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TG_6xPCR_48h_rep4.co.gz  mapping/TG1.ins.gz  mapping/TG2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TG_LA_24h_rep1.co.gz     mapping/TG1.ins.gz  mapping/TG2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TG_LA_24h_rep2.co.gz     mapping/TG1.ins.gz  mapping/TG2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TG_LA_24h_rep3.co.gz     mapping/TG1.ins.gz  mapping/TG2.ins.gz

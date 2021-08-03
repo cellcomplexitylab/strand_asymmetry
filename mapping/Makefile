@@ -1,36 +1,36 @@
 DOCKER_RUN= docker run --rm -v $$(pwd):/tmp -u$$(id -u):$$(id -g) ff
 
 INSERTIONS = \
-	AG1.ins.gz AG2.ins.gz \
-	TG1.ins.gz TG2.ins.gz AC1.ins.gz AC2.ins.gz TC1.ins.gz TC2.ins.gz \
-	CA1.ins.gz CA2.ins.gz
+	TG1.ins.gz TG2.ins.gz \
+	AG1.ins.gz AG2.ins.gz AC1.ins.gz AC2.ins.gz TC1.ins.gz TC2.ins.gz \
+	GT1.ins.gz GT2.ins.gz
 
 TARGETS= $(INSERTIONS)
 
-AG1= AG_ACG
-AG2= AG_TCT
-TG1= TG_AAC TG_TTC
-TG2= TG_AGG TG_ACA 
-AC1= AC_ATC AC_TGT
-AC2= AC_TGA AC_ACT
-TC1= TC_ATT TC_TAA
-TC2= TC_TGC TC_CCG
-CA1= CA_ACT CA_AAC
-CA2= CA_TTC CA_CCG
+TG1= TG_ACG
+TG2= TG_TCT
+AG1= AG_AAC AG_TTC
+AG2= AG_AGG AG_ACA 
+TC1= AC_ATC AC_TGT
+TC2= AC_TGA AC_ACT
+AC1= TC_ATT TC_TAA
+AC2= TC_TGC TC_CCG
+GT1= GT_ACT GT_AAC
+GT2= GT_TTC GT_CCG
 
 # Note that we add a % sign here. This will generate
 # a pattern rule with multiple targets, which is the
 # only way to tell Make that all fasta files are generated
 # by the same command.
-FASTA_BATCH_1= $(addsuffix %fasta.gz, $(AG1) $(AG2))
-FASTA_BATCH_2= $(addsuffix %fasta.gz, $(TG1) $(TG2) $(AC1) $(AC2) $(TC1) $(TC2))
-FASTA_BATCH_3= $(addsuffix %fasta.gz, $(CA1) $(CA2))
+FASTA_BATCH_1= $(addsuffix %fasta.gz, $(TG1) $(TG2))
+FASTA_BATCH_2= $(addsuffix %fasta.gz, $(AG1) $(AG2) $(AC1) $(AC2) $(TC1) $(TC2))
+FASTA_BATCH_3= $(addsuffix %fasta.gz, $(GT1) $(GT2))
 
 all: $(TARGETS)
 
 mm9_pT2_unmasked.fasta.gz:
 	$(DOCKER_RUN) wget -q https://hgdownload.cse.ucsc.edu/goldenPath/mm9/bigZips/mm9.fa.gz -O $@
-	$(DOCKER_RUN) cat pT2.fa.gz >> $@
+	$(DOCKER_RUN) cat pT2.fasta.gz >> $@
 
 mm9_pT2_unmasked.gem: mm9_pT2_unmasked.fasta.gz
 	$(DOCKER_RUN) gunzip mm9_pT2_unmasked -c > tmp-genome.fasta
@@ -61,9 +61,9 @@ iPCR3_2.fastq.gz:
 $(FASTA_BATCH_1): iPCR1_1.fastq.gz iPCR1_2.fastq.gz
 	$(DOCKER_RUN) python scripts/makefasta_nextseq.py $^
 $(FASTA_BATCH_2): iPCR2_1.fastq.gz iPCR2_2.fastq.gz
-	$(DOCKER_RUN) python scripts/makefasta_hiseq.py $^ TG_AC_TC
+	$(DOCKER_RUN) python scripts/makefasta_hiseq.py $^ AG_AC_TC
 $(FASTA_BATCH_3): iPCR3_1.fastq.gz iPCR3_2.fastq.gz
-	$(DOCKER_RUN) python scripts/makefasta_hiseq.py $^ CA
+	$(DOCKER_RUN) python scripts/makefasta_hiseq.py $^ GT
 
 # Map individual files.
 %.map.gz: %.fasta.gz mm9_pT2_unmasked.gem
@@ -78,7 +78,7 @@ $(FASTA_BATCH_3): iPCR3_1.fastq.gz iPCR3_2.fastq.gz
 # The secondary expansions will allow to replace the matching
 # stem of the rule by the variables declared above.
 .SECONDEXPANSION:
-%.ins-raw.gz: $$(addsuffix .map.gz, $$($$*)) $$(addsuffix .stc.gz, $$($$*))
+%.ins-raw.gz: $$(addsuffix .map.gz, $$($$*)) $$(addsuffix .stc.gz, $$($$*)) mm9_pT2_unmasked.fasta.gz
 	$(DOCKER_RUN) python scripts/collect.py $^ | gzip > $@
 
 # Remove contaminants (the order matters in the calls below).
@@ -91,4 +91,4 @@ cleantmp:
 	rm -f *.fasta.gz *.map.gz *.stc.gz
 
 clean:
-	rm -f *fasta.gz *.map.gz *.stc *.ins.gz *.bcd
+	rm -f *fasta.gz *.map.gz *.stc.gz *.ins-raw.gz *.ins.gz

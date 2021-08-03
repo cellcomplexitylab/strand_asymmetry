@@ -27,18 +27,26 @@ class TieException(Exception):
 # order of how they appear in the product of gene synthesis.
 # The mismatches as they happen during the repair process are
 # as follows:
-#    CT    G:T
-#    CA    G:A
-#    GA    C:A
-#    GT    C:T
-#    TC    A:C
+#    CT    T:G
+#    CA    A:G
+#    GA    A:C
+#    GT    T:C
+#    TC    G:T
+
+#SCARCODES = {
+#   'CT': 'CGCTAATTAATG',
+#   'CA': 'GCTAGCAGTCAG',
+#   'GA': 'GCTAGCTCGTTG',
+#   'GT': 'GCTAGCTCCGCA',
+#   'TC': 'GCTAGCGCGCGT',
+#}
 
 SCARCODES = {
-   'CT': 'CGCTAATTAATG',
-   'CA': 'GCTAGCAGTCAG',
-   'GA': 'GCTAGCTCGTTG',
-   'GT': 'GCTAGCTCCGCA',
-   'TC': 'GCTAGCGCGCGT',
+   'TG': 'CGCTAATTAATG',
+   'AG': 'GCTAGCAGTCAG',
+   'AC': 'GCTAGCTCGTTG',
+   'TC': 'GCTAGCTCCGCA',
+   'GT': 'GCTAGCGCGCGT',
 }
 
 
@@ -60,11 +68,11 @@ class ScarcodeRemover():
    def __init__(self, MM):
       # Assign a fixed matcher upon instantiation.
       self.matcher = {
-         'CT': seeq.compile(SCARCODES['CT'], 2),
-         'CA': seeq.compile(SCARCODES['CA'], 2),
-         'GA': seeq.compile(SCARCODES['GA'], 2),
-         'GT': seeq.compile(SCARCODES['GT'], 2),
+         'TG': seeq.compile(SCARCODES['TG'], 2),
+         'AG': seeq.compile(SCARCODES['AG'], 2),
+         'AC': seeq.compile(SCARCODES['AC'], 2),
          'TC': seeq.compile(SCARCODES['TC'], 2),
+         'GT': seeq.compile(SCARCODES['GT'], 2),
       }[MM]
 
    def remove(self, bcd_scar):
@@ -82,7 +90,7 @@ class EventCounter:
    '''Basic information about the experiment.'''
 
    def __init__(self, normalizer, info):
-
+      
       # Events are recorded in a nested counter.
       # barcode: umi: variant: count.
       self.events = defaultdict(lambda:
@@ -97,11 +105,16 @@ class EventCounter:
 
       assign = {
          #          FF          AT          GC
-         'GA': (('A', 'C'), ('A', 'T'), ('G', 'C')),
-         'GT': (('T', 'C'), ('T', 'A'), ('G', 'C')),
-         'CA': (('A', 'G'), ('A', 'T'), ('C', 'G')),
-         'CT': (('T', 'G'), ('T', 'A'), ('C', 'G')),
-         'TC': (('G', 'T'), ('A', 'T'), ('G', 'C')),
+#         'GA': (('A', 'C'), ('A', 'T'), ('G', 'C')),
+#         'GT': (('T', 'C'), ('T', 'A'), ('G', 'C')),
+#         'CA': (('A', 'G'), ('A', 'T'), ('C', 'G')),
+#         'CT': (('T', 'G'), ('T', 'A'), ('C', 'G')),
+#         'TC': (('G', 'T'), ('A', 'T'), ('G', 'C')),
+         'AC': (('A', 'C'), ('A', 'T'), ('G', 'C')),
+         'TC': (('T', 'C'), ('T', 'A'), ('G', 'C')),
+         'AG': (('A', 'G'), ('A', 'T'), ('C', 'G')),
+         'TG': (('T', 'G'), ('T', 'A'), ('C', 'G')),
+         'GT': (('G', 'T'), ('A', 'T'), ('G', 'C')),
       }
 
       # Use the starcode file of the normalizer in order
@@ -138,9 +151,13 @@ class EventCounter:
 
       decode = {
          ('A', 'C'): 'FF',
+         ('C', 'A'): 'FF',
          ('T', 'C'): 'FF',
+         ('C', 'T'): 'FF',
          ('A', 'G'): 'FF',
+         ('G', 'A'): 'FF',
          ('T', 'G'): 'FF',
+         ('G', 'T'): 'FF',
          ('A', 'T'): 'AT',
          ('T', 'A'): 'AT',
          ('G', 'C'): 'GC',
@@ -167,7 +184,6 @@ class EventCounter:
 
       for line in f:
          self.info.nreads += 1
-         # Assume that preprocessed file is tab-separated.
          tag, V1, V2, SEQ1, SEQ2 = line.split()
          try:
             bcd_scar, umi = self.normalize_tag(tag)
@@ -263,13 +279,17 @@ class CountingInfo:
 
    # MMcodes and their scarcodes.
    MM = {
-      SCARCODES['CT']: 'CT',
-      SCARCODES['CA']: 'CA',
-      SCARCODES['GA']: 'GA',
-      SCARCODES['GT']: 'GT',
+#      SCARCODES['CT']: 'CT',
+#      SCARCODES['CA']: 'CA',
+#      SCARCODES['GA']: 'GA',
+#      SCARCODES['GT']: 'GT',
+#      SCARCODES['TC']: 'TC',
+      SCARCODES['TG']: 'TG',
+      SCARCODES['AG']: 'AG',
+      SCARCODES['AC']: 'AC',
       SCARCODES['TC']: 'TC',
+      SCARCODES['GT']: 'GT',
    }
-
 
    def __init__(self, fname1, fname2):
       self.fname1 = fname1
@@ -325,11 +345,11 @@ class CountingInfo:
 
       # Scarcodes and the corresponding mismatches.
       refscars = {
-         SCARCODES['CT']: 0,
-         SCARCODES['CA']: 0,
-         SCARCODES['GA']: 0,
-         SCARCODES['GT']: 0,
+         SCARCODES['TG']: 0,
+         SCARCODES['AG']: 0,
+         SCARCODES['AC']: 0,
          SCARCODES['TC']: 0,
+         SCARCODES['GT']: 0,
       }
 
       # Note: the class 'TagNormalizer' was made

@@ -41,6 +41,10 @@ figures/integ_circos.pdf: $(INSERTIONS)
 figures/spie_genes.pdf: $(INSERTIONS) misc/GSE93238_gene.fpkm.txt.gz misc/Mus_musculus.NCBIM37.67.gtf.gz
 	$(DOCKER_RUN) R -f scripts/plot_spie_genes.R
 
+# Figure 3.
+figures/bias.pdf: stats_by_experiments_without_mapping.txt
+	$(DOCKER_RUN) R -f scripts/plot_bias.R
+
 # Figure 6.
 figures/CRISPR_circos.pdf: misc/gRNA_counts_CA1.txt misc/gRNA_counts_CA2.txt
 	$(DOCKER_RUN) R -f scripts/plot_circos_CRISPR.R
