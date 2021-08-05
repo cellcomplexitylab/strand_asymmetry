@@ -18,40 +18,53 @@ class TestScarcodeRemover(unittest.TestCase):
    def test_remove(self):
 
       # List of scarcodes:
-      # CT: CGCTAATTAATG
-      # CA: GCTAGCAGTCAG
-      # GA: GCTAGCTCGTTG
-      # GT: GCTAGCTCCGCA
+      # TG: CGCTAATTAATG
+      # AG: GCTAGCAGTCAG
+      # AC: GCTAGCTCGTTG
+      # TC: GCTAGCTCCGCA
+      # GT: GCTAGCGCGCGT
 
-      scar = count.ScarcodeRemover('CT')
-      self.assertEqual(scar.remove('aaaCGCTAATTAATG'), 'aaa')
-      self.assertEqual(scar.remove('aaaCGCTAtTTAATG'), 'aaa')
-      self.assertEqual(scar.remove('aaagGCTAtTTAATG'), 'aaag')
-      self.assertEqual(scar.remove('aaaCaCTAtTTAATG'), 'aaa')
+      scar = count.ScarcodeRemover('TG')
+      self.assertEqual(scar.remove('aaaCGCTAATTAATG'),  'aaa')
+      self.assertEqual(scar.remove('aaaCGCTAaATTAATG'), 'aaa')
+      self.assertEqual(scar.remove('aaaCGCTATTAATG'),   'aaa')
+      self.assertEqual(scar.remove('aaaCGCTAtTTAATG'),  'aaa')
+      self.assertEqual(scar.remove('aaaCaCTAtTTAATG'),  'aaa')
 
-      scar = count.ScarcodeRemover('CA')
-      self.assertEqual(scar.remove('aaaGCTAGCAGTCAG'), 'aaa')
-      self.assertEqual(scar.remove('aaaGCTAGCAaTCAG'), 'aaa')
-      self.assertEqual(scar.remove('aaatCTAGCAGTCAG'), 'aaat')
-      self.assertEqual(scar.remove('aaaGtTAGCAGTCAG'), 'aaa')
+      scar = count.ScarcodeRemover('AG')
+      self.assertEqual(scar.remove('aaaGCTAGCAGTCAG'),  'aaa')
+      self.assertEqual(scar.remove('aaaGCTAGaCAGTCAG'), 'aaa')
+      self.assertEqual(scar.remove('aaaGCTAGAGTCAG'),   'aaa')
+      self.assertEqual(scar.remove('aaaGCTAGCAaTCAG'),  'aaa')
+      self.assertEqual(scar.remove('aaaGtTAGCAGTCAG'),  'aaa')
 
-      scar = count.ScarcodeRemover('GA')
-      self.assertEqual(scar.remove('aaaGCTAGCTCGTTG'), 'aaa')
-      self.assertEqual(scar.remove('aaaGCTAGCTCaTTG'), 'aaa')
-      self.assertEqual(scar.remove('aaaaCTAGCTCGTTG'), 'aaaa')
+      scar = count.ScarcodeRemover('AC')
+      self.assertEqual(scar.remove('aaaGCTAGCTCGTTG'),  'aaa')
+      self.assertEqual(scar.remove('aaaGCTAGaCTCGTTG'), 'aaa')
+      self.assertEqual(scar.remove('aaaGCTAGTCGTTG'),   'aaa')
+      self.assertEqual(scar.remove('aaaGCTAGCTCaTTG'),  'aaa')
+      self.assertEqual(scar.remove('aaaGCaAGCTCaTTG'),  'aaa')
+
+      scar = count.ScarcodeRemover('TC')
+      self.assertEqual(scar.remove('aaaGCTAGCTCCGCA'),  'aaa')
+      self.assertEqual(scar.remove('aaaGCTAGCaTCCGCA'), 'aaa')
+      self.assertEqual(scar.remove('aaaGCTAGCCCGCA'),   'aaa')
+      self.assertEqual(scar.remove('aaaGCTAGCTgCGCA'),  'aaa')
+      self.assertEqual(scar.remove('aaaGaTAGCTCCGCA'),  'aaa')
 
       scar = count.ScarcodeRemover('GT')
-      self.assertEqual(scar.remove('aaaGCTAGCTgCGCA'), 'aaa')
-      self.assertEqual(scar.remove('aaaGCTAGCTCCGCA'), 'aaa')
-      self.assertEqual(scar.remove('aaatCTAGCTCCGCA'), 'aaat')
-      self.assertEqual(scar.remove('aaaGaTAGCTCCGCA'), 'aaa')
+      self.assertEqual(scar.remove('aaaGCTAGCGCGCGT'),  'aaa')
+      self.assertEqual(scar.remove('aaaGCTAGaCGCGCGT'), 'aaa')
+      self.assertEqual(scar.remove('aaaGCTAGGCGCGT'),   'aaa')
+      self.assertEqual(scar.remove('aaaGCTAGCGCaCGT'),  'aaa')
+      self.assertEqual(scar.remove('aaaGCTAaCGCaCGT'),  'aaa')
 
 
    def test_remove_fail(self):
       # Test if the remove raises an exception if the scarcode
       # is not found.
 
-      scar = count.ScarcodeRemover('CT')
+      scar = count.ScarcodeRemover('TG')
       with self.assertRaises(count.WrongScarcodeException):
          scar.remove('aaaAAAAAAAAAAAA')
       with self.assertRaises(count.WrongScarcodeException):
@@ -142,7 +155,7 @@ class TestCountingInfo(unittest.TestCase):
          'CACGCTCTGCATGTTTCCCAGCTAGCTCGTTGATGCTACGATCCGTCGGGATACTAAC',
       ])
       mm = info.get_MMcode(tags)
-      self.assertEqual(mm, 'GA')
+      self.assertEqual(mm, 'AC')
 
       # Test case 2 (CT).
       tags = set([
@@ -151,7 +164,7 @@ class TestCountingInfo(unittest.TestCase):
          'CACGCTCTGCATGTTTCCCCGCTAATTAATGAATGCTACGATCCGTCGGGATACTAAC',
       ])
       mm = info.get_MMcode(tags)
-      self.assertEqual(mm, 'CT')
+      self.assertEqual(mm, 'TG')
 
       # Test case 3 (CA).
       tags = set([
@@ -160,7 +173,7 @@ class TestCountingInfo(unittest.TestCase):
          'CACGCTCTGCATGTTTCCCAGCTAGCAGTCAGATGCTACGATCCGTCGGGATACTAAC',
       ])
       mm = info.get_MMcode(tags)
-      self.assertEqual(mm, 'CA')
+      self.assertEqual(mm, 'AG')
 
       # Test case 4 (GT).
       tags = set([
@@ -169,7 +182,7 @@ class TestCountingInfo(unittest.TestCase):
          'CACGCTCTGCATGTTTCCCAGCTAGCTCCGCAATGCTACGATCCGTCGGGATACTAAC',
       ])
       mm = info.get_MMcode(tags)
-      self.assertEqual(mm, 'GT')
+      self.assertEqual(mm, 'TC')
 
 
    def test_normalize_variant(self):
@@ -231,7 +244,7 @@ class TestEventCounter(unittest.TestCase):
       info = count.CountingInfo('dummy_fname1', 'dummy_fname2')
       counter = count.EventCounter(normalizer, info)
 
-      self.assertEqual(counter.info.MMcode, 'GA') 
+      self.assertEqual(counter.info.MMcode, 'AC') 
       
       # Mini starcode file (CT).
       f = StringIO(
@@ -243,7 +256,7 @@ class TestEventCounter(unittest.TestCase):
       normalizer = count.TagNormalizer(f)
       counter = count.EventCounter(normalizer, info)
 
-      self.assertEqual(counter.info.MMcode, 'CT') 
+      self.assertEqual(counter.info.MMcode, 'TG') 
 
       # Mini starcode file (CA).
       f = StringIO(
@@ -255,7 +268,7 @@ class TestEventCounter(unittest.TestCase):
       normalizer = count.TagNormalizer(f)
       counter = count.EventCounter(normalizer, info)
 
-      self.assertEqual(counter.info.MMcode, 'CA') 
+      self.assertEqual(counter.info.MMcode, 'AG') 
 
       # Mini starcode file (GT).
       f = StringIO(
@@ -267,7 +280,7 @@ class TestEventCounter(unittest.TestCase):
       normalizer = count.TagNormalizer(f)
       counter = count.EventCounter(normalizer, info)
 
-      self.assertEqual(counter.info.MMcode, 'GT') 
+      self.assertEqual(counter.info.MMcode, 'TC') 
 
 
    def test_count(self):
@@ -325,7 +338,7 @@ class TestEventCounter(unittest.TestCase):
       )
 
       # Test info gathering.
-      self.assertEqual(info.MMcode, 'GA')
+      self.assertEqual(info.MMcode, 'AC')
       self.assertEqual(info.nreads, 15)
       self.assertEqual(info.wrong_scarcode, 1)
       self.assertEqual(info.barcode_too_short, 1)

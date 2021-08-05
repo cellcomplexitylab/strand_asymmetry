@@ -1026,8 +1026,12 @@ TG_LA_no_ISceI_rep4_2.fastq.gz:
 	$(DOCKER_RUN) /bin/bash -c "zcat $*.pps.gz | cut -f1 | starcode -d2 --print-clusters | gzip > $*.stc.gz"
 	$(DOCKER_RUN) /bin/bash -c "python scripts/count.py $*.pps.gz $*.stc.gz $*_seq.txt.gz | gzip > $@ && rm $*.pps.gz $*.stc.gz"
 
-check:
+check-data:
 	md5sum -c md5sums.txt
+
+test:
+	-$(DOCKER_RUN) python scripts/test_count.py
+	-$(DOCKER_RUN) python scripts/test_preprocess.py
 
 clean:
 	rm -f *.co.gz *_seq.txt.gz *fastq.gz

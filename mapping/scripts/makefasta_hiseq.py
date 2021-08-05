@@ -25,8 +25,8 @@ def extract_reads_from_PE_fastq(fname_iPCR_PE1, fname_iPCR_PE2, flag):
    if flag == 'AG_AC_TC':
       matchers = {
          'AG': seeq.compile('GCTAGCAGTCAGGAATCATG', 3),
-         'TC': seeq.compile('GCTAGCTCCGCAGAATCATG', 3),
          'AC': seeq.compile('GCTAGCTCGTTGGAATCATG', 3),
+         'TC': seeq.compile('GCTAGCTCCGCAGAATCATG', 3),
       }
    elif flag == 'GT':
       matchers = {
@@ -38,8 +38,8 @@ def extract_reads_from_PE_fastq(fname_iPCR_PE1, fname_iPCR_PE2, flag):
    if flag == 'AG_AC_TC':
       indexes = {
          'AG': frozenset(['AAC', 'ACA', 'AGG', 'TTC']),
-         'TC': frozenset(['ACT', 'ATC', 'TGA', 'TGT']),
          'AC': frozenset(['ATT', 'CCG', 'TAA', 'TGC']),
+         'TC': frozenset(['ACT', 'ATC', 'TGA', 'TGT']),
       }
    elif flag == 'GT':
       indexes = {
