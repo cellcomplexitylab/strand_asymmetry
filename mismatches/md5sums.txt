@@ -111,7 +111,7 @@ dfa61294b1e93468450f594a4ddfd172  TC_LA_no_ISceI_rep3.co.gz
 fb58f7000d122de93f18c878551c110a  TC_LA_no_ISceI_rep6.co.gz
 1b7963dc02ca2881baf08e14b2517d82  TC_LA_no_ISceI_rep7.co.gz
 137b193e31a7a24f9fb76881789b1afc  TC_LA_no_ISceI_rep8.co.gz
-7029066c27ac6f5ef18d660d5741979a  TG_6xPCR_24h_rep1.co.gz
+b2a90ee8eb83275553538c7db336c3b6  TG_6xPCR_24h_rep1.co.gz
 2d94d4a9c0b8c76b152043c4db4a48a8  TG_6xPCR_24h_rep2.co.gz
 2db606d688a8f870da0bf19aeb130365  TG_6xPCR_24h_rep3.co.gz
 a949b2ac9f8ef01c57b0f6d236f1ce98  TG_6xPCR_24h_rep4.co.gz

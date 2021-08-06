@@ -1,11 +1,11 @@
 biasdat = read.delim("stats_by_experiments_without_mapping.txt")
 
 POS1 = c(1, 3.5, 6, 8.5, 11)
-names(POS1) = c("AG", "TG", "AC", "TC", "CA")
+names(POS1) = c("AG", "TG", "AC", "TC", "GT")
 POS2 = c(0,1)
 names(POS2) = c("24", "48")
 COL = c("#44228880", "#6CA2EA80", "#B5D33D80", "#FED23F80", "#EB7D5B80")
-names(COL) = c("AG", "TG", "AC", "TC", "CA")
+names(COL) = c("AG", "TG", "AC", "TC", "GT")
 SYM = c(1,2)
 names(SYM) = c("LA", "6xPCR")
 

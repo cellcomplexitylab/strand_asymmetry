@@ -1,30 +1,11 @@
 #!/bin/bash
 
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_6xPCR_24h_rep1.co.gz  mapping/AC1.ins.gz  mapping/AC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_6xPCR_24h_rep2.co.gz  mapping/AC1.ins.gz  mapping/AC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_6xPCR_24h_rep3.co.gz  mapping/AC1.ins.gz  mapping/AC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_6xPCR_24h_rep4.co.gz  mapping/AC1.ins.gz  mapping/AC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_6xPCR_48h_rep1.co.gz  mapping/AC1.ins.gz  mapping/AC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_6xPCR_48h_rep2.co.gz  mapping/AC1.ins.gz  mapping/AC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_6xPCR_48h_rep3.co.gz  mapping/AC1.ins.gz  mapping/AC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_6xPCR_48h_rep4.co.gz  mapping/AC1.ins.gz  mapping/AC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_LA_24h_rep1.co.gz     mapping/AC1.ins.gz  mapping/AC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_LA_24h_rep2.co.gz     mapping/AC1.ins.gz  mapping/AC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_LA_24h_rep3.co.gz     mapping/AC1.ins.gz  mapping/AC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_LA_24h_rep4.co.gz     mapping/AC1.ins.gz  mapping/AC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_LA_48h_rep1.co.gz     mapping/AC1.ins.gz  mapping/AC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_LA_48h_rep2.co.gz     mapping/AC1.ins.gz  mapping/AC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_LA_48h_rep3.co.gz     mapping/AC1.ins.gz  mapping/AC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_LA_48h_rep4.co.gz     mapping/AC1.ins.gz  mapping/AC2.ins.gz
-
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AG_6xPCR_24h_rep1.co.gz  mapping/AG1.ins.gz  mapping/AG2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AG_6xPCR_24h_rep2.co.gz  mapping/AG1.ins.gz  mapping/AG2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AG_6xPCR_24h_rep3.co.gz  mapping/AG1.ins.gz  mapping/AG2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AG_6xPCR_24h_rep4.co.gz  mapping/AG1.ins.gz  mapping/AG2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AG_6xPCR_48h_rep1.co.gz  mapping/AG1.ins.gz  mapping/AG2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AG_6xPCR_48h_rep2.co.gz  mapping/AG1.ins.gz  mapping/AG2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AG_6xPCR_48h_rep3.co.gz  mapping/AG1.ins.gz  mapping/AG2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AG_6xPCR_48h_rep4.co.gz  mapping/AG1.ins.gz  mapping/AG2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AG_LA_24h_rep1.co.gz     mapping/AG1.ins.gz  mapping/AG2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AG_LA_24h_rep2.co.gz     mapping/AG1.ins.gz  mapping/AG2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AG_LA_24h_rep3.co.gz     mapping/AG1.ins.gz  mapping/AG2.ins.gz
@@ -33,37 +14,6 @@ python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AG_LA_48h_r
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AG_LA_48h_rep2.co.gz     mapping/AG1.ins.gz  mapping/AG2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AG_LA_48h_rep3.co.gz     mapping/AG1.ins.gz  mapping/AG2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AG_LA_48h_rep4.co.gz     mapping/AG1.ins.gz  mapping/AG2.ins.gz
-                              
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/CA_6xPCR_24h_rep1.co.gz  mapping/CA1.ins.gz  mapping/CA2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/CA_6xPCR_24h_rep2.co.gz  mapping/CA1.ins.gz  mapping/CA2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/CA_6xPCR_24h_rep3.co.gz  mapping/CA1.ins.gz  mapping/CA2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/CA_6xPCR_24h_rep4.co.gz  mapping/CA1.ins.gz  mapping/CA2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/CA_6xPCR_48h_rep1.co.gz  mapping/CA1.ins.gz  mapping/CA2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/CA_6xPCR_48h_rep2.co.gz  mapping/CA1.ins.gz  mapping/CA2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/CA_6xPCR_48h_rep3.co.gz  mapping/CA1.ins.gz  mapping/CA2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/CA_6xPCR_48h_rep4.co.gz  mapping/CA1.ins.gz  mapping/CA2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/CA_LA_24h_rep1.co.gz     mapping/CA1.ins.gz  mapping/CA2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/CA_LA_24h_rep2.co.gz     mapping/CA1.ins.gz  mapping/CA2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/CA_LA_24h_rep3.co.gz     mapping/CA1.ins.gz  mapping/CA2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/CA_LA_24h_rep4.co.gz     mapping/CA1.ins.gz  mapping/CA2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/CA_LA_48h_rep1.co.gz     mapping/CA1.ins.gz  mapping/CA2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/CA_LA_48h_rep2.co.gz     mapping/CA1.ins.gz  mapping/CA2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/CA_LA_48h_rep3.co.gz     mapping/CA1.ins.gz  mapping/CA2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/CA_LA_48h_rep4.co.gz     mapping/CA1.ins.gz  mapping/CA2.ins.gz
-
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_6xPCR_24h_rep1.co.gz  mapping/TC1.ins.gz  mapping/TC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_6xPCR_24h_rep2.co.gz  mapping/TC1.ins.gz  mapping/TC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_6xPCR_24h_rep3.co.gz  mapping/TC1.ins.gz  mapping/TC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_6xPCR_24h_rep4.co.gz  mapping/TC1.ins.gz  mapping/TC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_6xPCR_48h_rep1.co.gz  mapping/TC1.ins.gz  mapping/TC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_6xPCR_48h_rep2.co.gz  mapping/TC1.ins.gz  mapping/TC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_LA_24h_rep1.co.gz     mapping/TC1.ins.gz  mapping/TC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_LA_24h_rep3.co.gz     mapping/TC1.ins.gz  mapping/TC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_LA_24h_rep4.co.gz     mapping/TC1.ins.gz  mapping/TC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_LA_48h_rep1.co.gz     mapping/TC1.ins.gz  mapping/TC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_LA_48h_rep2.co.gz     mapping/TC1.ins.gz  mapping/TC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_LA_48h_rep3.co.gz     mapping/TC1.ins.gz  mapping/TC2.ins.gz
-python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_LA_48h_rep4.co.gz     mapping/TC1.ins.gz  mapping/TC2.ins.gz
 
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TG_6xPCR_24h_rep1.co.gz  mapping/TG1.ins.gz  mapping/TG2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TG_6xPCR_24h_rep2.co.gz  mapping/TG1.ins.gz  mapping/TG2.ins.gz
@@ -81,3 +31,53 @@ python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TG_LA_48h_r
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TG_LA_48h_rep2.co.gz     mapping/TG1.ins.gz  mapping/TG2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TG_LA_48h_rep3.co.gz     mapping/TG1.ins.gz  mapping/TG2.ins.gz
 python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TG_LA_48h_rep4.co.gz     mapping/TG1.ins.gz  mapping/TG2.ins.gz
+
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_6xPCR_24h_rep1.co.gz  mapping/AC1.ins.gz  mapping/AC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_6xPCR_24h_rep2.co.gz  mapping/AC1.ins.gz  mapping/AC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_6xPCR_24h_rep3.co.gz  mapping/AC1.ins.gz  mapping/AC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_6xPCR_24h_rep4.co.gz  mapping/AC1.ins.gz  mapping/AC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_6xPCR_48h_rep1.co.gz  mapping/AC1.ins.gz  mapping/AC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_6xPCR_48h_rep2.co.gz  mapping/AC1.ins.gz  mapping/AC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_6xPCR_48h_rep3.co.gz  mapping/AC1.ins.gz  mapping/AC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_6xPCR_48h_rep4.co.gz  mapping/AC1.ins.gz  mapping/AC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_LA_24h_rep1.co.gz     mapping/AC1.ins.gz  mapping/AC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_LA_24h_rep2.co.gz     mapping/AC1.ins.gz  mapping/AC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_LA_24h_rep3.co.gz     mapping/AC1.ins.gz  mapping/AC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_LA_24h_rep4.co.gz     mapping/AC1.ins.gz  mapping/AC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_LA_48h_rep1.co.gz     mapping/AC1.ins.gz  mapping/AC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_LA_48h_rep2.co.gz     mapping/AC1.ins.gz  mapping/AC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_LA_48h_rep3.co.gz     mapping/AC1.ins.gz  mapping/AC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/AC_LA_48h_rep4.co.gz     mapping/AC1.ins.gz  mapping/AC2.ins.gz
+
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_6xPCR_24h_rep1.co.gz  mapping/TC1.ins.gz  mapping/TC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_6xPCR_24h_rep2.co.gz  mapping/TC1.ins.gz  mapping/TC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_6xPCR_24h_rep3.co.gz  mapping/TC1.ins.gz  mapping/TC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_6xPCR_24h_rep4.co.gz  mapping/TC1.ins.gz  mapping/TC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_6xPCR_48h_rep1.co.gz  mapping/TC1.ins.gz  mapping/TC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_6xPCR_48h_rep2.co.gz  mapping/TC1.ins.gz  mapping/TC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_6xPCR_48h_rep3.co.gz  mapping/TC1.ins.gz  mapping/TC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_6xPCR_48h_rep4.co.gz  mapping/TC1.ins.gz  mapping/TC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_LA_24h_rep1.co.gz     mapping/TC1.ins.gz  mapping/TC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_LA_24h_rep3.co.gz     mapping/TC1.ins.gz  mapping/TC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_LA_24h_rep4.co.gz     mapping/TC1.ins.gz  mapping/TC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_LA_48h_rep1.co.gz     mapping/TC1.ins.gz  mapping/TC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_LA_48h_rep2.co.gz     mapping/TC1.ins.gz  mapping/TC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_LA_48h_rep3.co.gz     mapping/TC1.ins.gz  mapping/TC2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/TC_LA_48h_rep4.co.gz     mapping/TC1.ins.gz  mapping/TC2.ins.gz
+
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/GT_6xPCR_24h_rep1.co.gz  mapping/GT1.ins.gz  mapping/GT2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/GT_6xPCR_24h_rep2.co.gz  mapping/GT1.ins.gz  mapping/GT2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/GT_6xPCR_24h_rep3.co.gz  mapping/GT1.ins.gz  mapping/GT2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/GT_6xPCR_24h_rep4.co.gz  mapping/GT1.ins.gz  mapping/GT2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/GT_6xPCR_48h_rep1.co.gz  mapping/GT1.ins.gz  mapping/GT2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/GT_6xPCR_48h_rep2.co.gz  mapping/GT1.ins.gz  mapping/GT2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/GT_6xPCR_48h_rep3.co.gz  mapping/GT1.ins.gz  mapping/GT2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/GT_6xPCR_48h_rep4.co.gz  mapping/GT1.ins.gz  mapping/GT2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/GT_LA_24h_rep1.co.gz     mapping/GT1.ins.gz  mapping/GT2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/GT_LA_24h_rep2.co.gz     mapping/GT1.ins.gz  mapping/GT2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/GT_LA_24h_rep3.co.gz     mapping/GT1.ins.gz  mapping/GT2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/GT_LA_24h_rep4.co.gz     mapping/GT1.ins.gz  mapping/GT2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/GT_LA_48h_rep1.co.gz     mapping/GT1.ins.gz  mapping/GT2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/GT_LA_48h_rep2.co.gz     mapping/GT1.ins.gz  mapping/GT2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/GT_LA_48h_rep3.co.gz     mapping/GT1.ins.gz  mapping/GT2.ins.gz
+python scripts/make_events_with_mapping.py  black.lst.gz  mismatches/GT_LA_48h_rep4.co.gz     mapping/GT1.ins.gz  mapping/GT2.ins.gz

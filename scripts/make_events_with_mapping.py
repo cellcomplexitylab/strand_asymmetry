@@ -37,11 +37,12 @@ def main(f, fname, barcode_dict_1, barcode_dict_2, BL):
       bcd,FF,AT,GC = line.split()
       # Skip barcodes in the black list.
       if bcd in BL: continue
+      # Skip truncated barcodes.
+      if len(bcd) < 18: continue
       scores = [float(a) for a in (FF, AT, GC)]
-      # Must have more than one UMI against FF.
-      if scores[0] >= max(scores)-1:continue
       winner = max((0,1,2), key=lambda x: scores[x])
-      if scores[winner] < 2: continue
+      # Winning with only 1 UMI is cheating.
+      if winner == 0 or scores[winner] < 2: continue
       ratio = scores[1] / (scores[1] + scores[2])
       if bcd in barcode_dict_1:
          the_dict = barcode_dict_1

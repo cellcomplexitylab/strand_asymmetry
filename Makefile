@@ -1,8 +1,8 @@
 DOCKER_RUN= docker run --rm -v $$(pwd):/tmp -u$$(id -u):$$(id -g) ff
 
-INSERTIONS= $(addprefix mapping/, AG1.ins.gz AG2.ins.gz \
-	TG1.ins.gz TG2.ins.gz AC1.ins.gz AC2.ins.gz \
-	TC1.ins.gz TC2.ins.gz CA1.ins.gz CA2.ins.gz)
+INSERTIONS= $(addprefix mapping/, TG1.ins.gz TG2.ins.gz \
+	AG1.ins.gz AG2.ins.gz AC1.ins.gz AC2.ins.gz \
+	TC1.ins.gz TC2.ins.gz GT1.ins.gz GT2.ins.gz)
 
 MISMATCHES= $(addprefix mismatches., insertmismatches)
 
