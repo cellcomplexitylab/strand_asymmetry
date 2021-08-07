@@ -44,6 +44,9 @@ figures/insertion_rates.pdf: $(INSERTIONS)
 figures/spie_genes.pdf: $(INSERTIONS) misc/GSE93238_gene.fpkm.txt.gz misc/Mus_musculus.NCBIM37.67.gtf.gz
 	$(DOCKER_RUN) R -f scripts/plot_spie_genes.R
 
+show-repeats: $(INSERTIONS)
+	$(DOCKER_RUN) R -f scripts/show_insertions_in_repeats.R
+
 # Figure 3.
 figures/bias.pdf: stats_by_experiments_without_mapping.txt
 	$(DOCKER_RUN) R -f scripts/plot_bias.R
@@ -58,6 +61,9 @@ misc/GSE93238_gene.fpkm.txt.gz:
 
 misc/Mus_musculus.NCBIM37.67.gtf.gz:
 	cd misc && $(MAKE) Mus_musculus.NCBIM37.67.gtf.gz
+
+misc/repeats.txt.gz:
+	http://genome.ucsc.edu/cgi-bin/hgTables?hgsid=1136532115_e7pXbqSks0xwI3SrfW5vxOqxX8t1&clade=mammal&org=Mouse&db=mm9&hgta_group=varRep&hgta_track=rmsk&hgta_table=0&hgta_regionType=genome&position=&hgta_outputType=primaryTable&hgta_outFileName=repeats.txt.gz
 
 # !!!! This part still has the original FASTQ identifers !!!!
 misc/gRNA_counts_GT1.txt:
