@@ -46,7 +46,7 @@ figures/bias.pdf: stats_by_experiments_without_mapping.txt
 	$(DOCKER_RUN) R -f scripts/plot_bias.R
 
 # Figure 6.
-figures/CRISPR_circos.pdf: misc/gRNA_counts_CA1.txt misc/gRNA_counts_CA2.txt
+figures/CRISPR_circos.pdf: misc/gRNA_counts_GT1.txt misc/gRNA_counts_GT2.txt
 	$(DOCKER_RUN) R -f scripts/plot_circos_CRISPR.R
 
 # Complementary data sets
@@ -57,7 +57,8 @@ misc/Mus_musculus.NCBIM37.67.gtf.gz:
 	cd misc && $(MAKE) Mus_musculus.NCBIM37.67.gtf.gz
 
 # !!!! This part still has the original FASTQ identifers !!!!
-misc/gRNA_counts_CA1.txt:
-	$(DOCKER_RUN) python misc/gather_gRNA_counts.py mismatches/15D*co.gz mismatches/17F*.co.gz > $@
-misc/gRNA_counts_CA2.txt:
-	$(DOCKER_RUN) python misc/gather_gRNA_counts.py mismatches/16E*co.gz mismatches/18G*.co.gz > $@
+misc/gRNA_counts_GT1.txt:
+	$(DOCKER_RUN) python scripts/gather_gRNA_counts.py mismatches/15D*.co.gz mismatches/17F*.co.gz > $@
+
+misc/gRNA_counts_GT2.txt:
+	$(DOCKER_RUN) python scripts/gather_gRNA_counts.py mismatches/16E*.co.gz mismatches/18G*.co.gz > $@

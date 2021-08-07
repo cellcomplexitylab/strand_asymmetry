@@ -11,10 +11,10 @@ AC1 = subset(read.table("mapping/AC1.ins.gz"), V2 != "pT2")
 AC2 = subset(read.table("mapping/AC2.ins.gz"), V2 != "pT2")
 TC1 = subset(read.table("mapping/TC1.ins.gz"), V2 != "pT2")
 TC2 = subset(read.table("mapping/TC2.ins.gz"), V2 != "pT2")
-CA1 = subset(read.table("mapping/CA1.ins.gz"), V2 != "pT2")
-CA2 = subset(read.table("mapping/CA2.ins.gz"), V2 != "pT2")
+GT1 = subset(read.table("mapping/GT1.ins.gz"), V2 != "pT2")
+GT2 = subset(read.table("mapping/GT2.ins.gz"), V2 != "pT2")
 
-allins = rbind(AG1, AG2, TG1, TG2, AC1, AC2, TC1, TC2, CA1, CA2)
+allins = rbind(AG1, AG2, TG1, TG2, AC1, AC2, TC1, TC2, GT1, GT2)
 gallins = GRanges(Rle(allins$V2), IRanges(start=allins$V4, width=1))
 
 # Get expression data in mouse ES cells.

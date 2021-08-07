@@ -12,20 +12,20 @@ AC1 = subset(read.table("mapping/AC1.ins.gz"), V2 != "pT2")
 AC2 = subset(read.table("mapping/AC2.ins.gz"), V2 != "pT2")
 TC1 = subset(read.table("mapping/TC1.ins.gz"), V2 != "pT2")
 TC2 = subset(read.table("mapping/TC2.ins.gz"), V2 != "pT2")
-CA1 = subset(read.table("mapping/CA1.ins.gz"), V2 != "pT2")
-CA2 = subset(read.table("mapping/CA2.ins.gz"), V2 != "pT2")
+GT1 = subset(read.table("mapping/GT1.ins.gz"), V2 != "pT2")
+GT2 = subset(read.table("mapping/GT2.ins.gz"), V2 != "pT2")
 
 AG = rbind(AG1, AG2)
 TG = rbind(TG1, TG2)
 AC = rbind(AC1, AC2)
 TC = rbind(TC1, TC2)
-CA = rbind(CA1, CA2)
+GT = rbind(GT1, GT2)
 
 gAG = GRanges(Rle(AG$V2), IRanges(start=AG$V4, width=1))
 gTG = GRanges(Rle(TG$V2), IRanges(start=TG$V4, width=1))
 gAC = GRanges(Rle(AC$V2), IRanges(start=AC$V4, width=1))
 gTC = GRanges(Rle(TC$V2), IRanges(start=TC$V4, width=1))
-gCA = GRanges(Rle(CA$V2), IRanges(start=CA$V4, width=1))
+gGT = GRanges(Rle(GT$V2), IRanges(start=GT$V4, width=1))
 
 data(UCSC.Mouse.GRCm38.CytoBandIdeogram)
 chr.exclude = NULL
@@ -44,13 +44,13 @@ AG = subset(AG, countOverlaps(gAG, gGRCm38) > 0)
 TG = subset(TG, countOverlaps(gTG, gGRCm38) > 0)
 AC = subset(AC, countOverlaps(gAC, gGRCm38) > 0)
 TC = subset(TC, countOverlaps(gTC, gGRCm38) > 0)
-CA = subset(CA, countOverlaps(gCA, gGRCm38) > 0)
+GT = subset(GT, countOverlaps(gGT, gGRCm38) > 0)
 
 print(nrow(AG))
 print(nrow(TG))
 print(nrow(AC))
 print(nrow(TC))
-print(nrow(CA))
+print(nrow(GT))
 
 
 # Take 1000 at random.
@@ -59,7 +59,7 @@ trackAG = AG[sample(nrow(AG),1000),c(2,4,4)]
 trackTG = TG[sample(nrow(TG),1000),c(2,4,4)]
 trackAC = AC[sample(nrow(AC),1000),c(2,4,4)]
 trackTC = TC[sample(nrow(TC),1000),c(2,4,4)]
-trackCA = CA[sample(nrow(CA),1000),c(2,4,4)]
+trackGT = GT[sample(nrow(GT),1000),c(2,4,4)]
 
 
 rcircos.params = RCircos.Get.Plot.Parameters()
@@ -80,5 +80,5 @@ Tile.Plot(trackAG, 1, "in", col=COL[1])
 Tile.Plot(trackTG, 2, "in", col=COL[2])
 Tile.Plot(trackAC, 3, "in", col=COL[3])
 Tile.Plot(trackTC, 4, "in", col=COL[4])
-Tile.Plot(trackCA, 5, "in", col=COL[5])
+Tile.Plot(trackGT, 5, "in", col=COL[5])
 dev.off()

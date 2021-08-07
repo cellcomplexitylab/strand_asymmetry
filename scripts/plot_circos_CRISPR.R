@@ -5,25 +5,25 @@ library(GenomicRanges)
 source("scripts/improvedRCircos.R")
 
 # Keep only the first 4 columns.
-CA1 = subset(read.table("mapping/CA1.ins.gz"), V2 != "pT2")[,1:4]
-CA2 = subset(read.table("mapping/CA2.ins.gz"), V2 != "pT2")[,1:4]
+GT1 = subset(read.table("mapping/GT1.ins.gz"), V2 != "pT2")[,1:4]
+GT2 = subset(read.table("mapping/GT2.ins.gz"), V2 != "pT2")[,1:4]
 
-gRNA_CA1 = subset(read.table("misc/gRNA_counts_CA1.txt"), V1 %in% CA1$V1)
-gRNA_CA2 = subset(read.table("misc/gRNA_counts_CA2.txt"), V1 %in% CA2$V1)
+gRNA_GT1 = subset(read.table("misc/gRNA_counts_GT1.txt"), V1 %in% GT1$V1)
+gRNA_GT2 = subset(read.table("misc/gRNA_counts_GT2.txt"), V1 %in% GT2$V1)
 
-colnames(CA1) = c("barcode", "chrom", "strand", "pos")
-colnames(CA2) = c("barcode", "chrom", "strand", "pos")
-colnames(gRNA_CA1) = c("barcode", "g1", "g2")
-colnames(gRNA_CA2) = c("barcode", "g1", "g2")
+colnames(GT1) = c("barcode", "chrom", "strand", "pos")
+colnames(GT2) = c("barcode", "chrom", "strand", "pos")
+colnames(gRNA_GT1) = c("barcode", "g1", "g2")
+colnames(gRNA_GT2) = c("barcode", "g1", "g2")
 
-CA1 = merge(CA1, gRNA_CA1)
-CA2 = merge(CA2, gRNA_CA2)
+GT1 = merge(GT1, gRNA_GT1)
+GT2 = merge(GT2, gRNA_GT2)
 
-head(CA1)
-head(CA2)
+head(GT1)
+head(GT2)
 
-gCA1 = GRanges(Rle(CA1$chrom), IRanges(start=CA1$pos, width=1))
-gCA2 = GRanges(Rle(CA2$chrom), IRanges(start=CA2$pos, width=1))
+gGT1 = GRanges(Rle(GT1$chrom), IRanges(start=GT1$pos, width=1))
+gGT2 = GRanges(Rle(GT2$chrom), IRanges(start=GT2$pos, width=1))
 
 
 data(UCSC.Mouse.GRCm38.CytoBandIdeogram)
@@ -39,15 +39,15 @@ gGRCm38 = makeGRangesFromDataFrame(UCSC.Mouse.GRCm38.CytoBandIdeogram,
    seqnames.field="Chromosome", start.field="ChromStart",
    end.field="ChromEnd")
 
-CA1 = subset(CA1, countOverlaps(gCA1, gGRCm38) > 0)
-CA2 = subset(CA2, countOverlaps(gCA2, gGRCm38) > 0)
+GT1 = subset(GT1, countOverlaps(gGT1, gGRCm38) > 0)
+GT2 = subset(GT2, countOverlaps(gGT2, gGRCm38) > 0)
 
-print(nrow(CA1))
-print(nrow(CA2))
+print(nrow(GT1))
+print(nrow(GT2))
 
 
-trackCA1 = CA1[,c("chrom", "pos", "pos")]
-trackCA2 = CA2[,c("chrom", "pos", "pos")]
+trackGT1 = GT1[,c("chrom", "pos", "pos")]
+trackGT2 = GT2[,c("chrom", "pos", "pos")]
 
 
 rcircos.params = RCircos.Get.Plot.Parameters()
@@ -72,16 +72,16 @@ colmap = function(x, y) {
    return(map[idx])
 }
 
-colCA1 = colmap(CA1$g1, CA1$g2)
-colCA2 = colmap(CA2$g1, CA2$g2)
+colGT1 = colmap(GT1$g1, GT1$g2)
+colGT2 = colmap(GT2$g1, GT2$g2)
 
 pdf("figures/CRISPR_circos.pdf", useDingbats=FALSE)
 par(mar=c(0,0,0,0))
 RCircos.Set.Plot.Area()
 RCircos.Draw.Chromosome.Ideogram()
 RCircos.Label.Chromosome.Names()
-Tile.Plot(trackCA1, 1, "in", col=colCA1, lwd=.5)
-Tile.Plot(trackCA2, 2, "in", col=colCA2, lwd=.5)
+Tile.Plot(trackGT1, 1, "in", col=colGT1, lwd=.5)
+Tile.Plot(trackGT2, 2, "in", col=colGT2, lwd=.5)
 dev.off()
 
 # Plot color map.
@@ -98,16 +98,3 @@ for (i in 1:256) {
    rect(xleft=x-1, xright=x, ybottom=y-1, ytop=y, col=col, border=col)
 }
 dev.off()
-
-#pdf("figures/CA_CRISPR.pdf", useDingbats=FALSE, height=2, width=6)
-#par(mar=c(0,0,0,0))
-#plot(c(0, max(CA1$pos, CA2$pos)), c(0,3), type="n")
-#points(CA1$pos, rep(1, nrow(CA1)), pch=19, col=colmap(CA1$g1, CA1$g2))
-#points(CA2$pos, rep(2, nrow(CA2)), pch=19, col=colmap(CA2$g1, CA2$g2))
-##plot(c(0, max(CA1$pos, CA2$pos)), c(0,3), type="n")
-##points(CA1$pos, CA1$g1, pch=19, cex=.8, col="#fa017d80")
-##points(CA1$pos, CA1$g2, pch=19, cex=.8, col="#00047d80")
-##points(CA2$pos, CA2$g1 + 2, pch=19, cex=.8, col="#fa017d80")
-##points(CA2$pos, CA2$g2 + 2, pch=19, cex=.8, col="#00047d80")
-##abline(h=c(.5, 2.5), col="gray80")
-#dev.off()
