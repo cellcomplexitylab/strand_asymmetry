@@ -38,6 +38,9 @@ stats_by_experiments_without_mapping.txt: barcode_view_all_events_without_mappin
 figures/integ_circos.pdf: $(INSERTIONS)
 	$(DOCKER_RUN) R -f scripts/plot_circos_integrations.R
 
+figures/insertion_rates.pdf: $(INSERTIONS)
+	$(DOCKER_RUN) R -f scripts/plot_insertion_rates.R
+
 figures/spie_genes.pdf: $(INSERTIONS) misc/GSE93238_gene.fpkm.txt.gz misc/Mus_musculus.NCBIM37.67.gtf.gz
 	$(DOCKER_RUN) R -f scripts/plot_spie_genes.R
 
