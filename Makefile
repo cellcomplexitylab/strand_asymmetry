@@ -21,7 +21,7 @@ $(INSERTIONS):
 black.lst.gz: $(INSERTIONS) # $(MISMATCHES)
 	$(DOCKER_RUN) /bin/bash scripts/make_blacklist.sh | gzip > $@
 
-barcode_view_all_events_with_mapping.txt: black.lst.gz
+barcode_view_all_events_with_mapping.txt: $(INSERTIONS) black.lst.gz
 	$(DOCKER_RUN) /bin/bash scripts/extract_all_events_with_mapping.sh > $@
 
 barcode_view_all_events_without_mapping.txt: black.lst.gz
@@ -39,6 +39,8 @@ conflicts_by_experiments_with_mapping.txt: barcode_view_all_events_with_mapping.
 conflicts_by_experiments_without_mapping.txt: barcode_view_all_events_without_mapping.txt
 	$(DOCKER_RUN) R -f scripts/get_conflicts_by_experiments_without_mapping.R
 
+mutual_information.txt: barcode_view_all_events_without_mapping.txt
+	$(DOCKER_RUN) python scripts/compute_mutual_info.py $< > $@
 
 # Figure 2.
 figures/integ_circos.pdf: $(INSERTIONS)
@@ -60,6 +62,9 @@ figures/bias.pdf: bias_by_experiments_without_mapping.txt
 # Figure 4.
 figures/conflicts.pdf: conflicts_by_experiments_without_mapping.txt
 	$(DOCKER_RUN) R -f scripts/plot_conflicts.R
+
+figures/mutual_information.pdf: mutual_information.txt
+	$(DOCKER_RUN) R -f scripts/plot_mutual_information.R
 
 # Figure 6.
 figures/CRISPR_circos.pdf: misc/gRNA_counts_GT1.txt misc/gRNA_counts_GT2.txt

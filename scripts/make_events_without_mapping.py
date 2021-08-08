@@ -27,8 +27,8 @@ def main(f, fname, BL):
    for line in f: 
       #if line[0].isspace(): continue
       bcd,FF,AT,GC = line.split()
-      # Skip barcodes in the black list.
-      if bcd in BL: continue
+      # Skip barcodes in the black list (if test).
+      if ctrl == "test" and bcd in BL: continue
       # Skip truncated barcodes.
       if len(bcd) < 18: continue
       scores = [float(a) for a in (FF, AT, GC)]
