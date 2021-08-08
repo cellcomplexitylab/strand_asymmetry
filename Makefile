@@ -27,11 +27,17 @@ barcode_view_all_events_with_mapping.txt: black.lst.gz
 barcode_view_all_events_without_mapping.txt: black.lst.gz
 	$(DOCKER_RUN) /bin/bash scripts/extract_all_events_without_mapping.sh > $@
 
-stats_by_experiments_with_mapping.txt: barcode_view_all_events_with_mapping.txt
-	$(DOCKER_RUN) R -f scripts/get_stats_by_experiments_with_mapping.R
+bias_by_experiments_with_mapping.txt: barcode_view_all_events_without_mapping.txt
+	$(DOCKER_RUN) R -f scripts/get_bias_by_experiments_with_mapping.R
 
-stats_by_experiments_without_mapping.txt: barcode_view_all_events_without_mapping.txt
-	$(DOCKER_RUN) R -f scripts/get_stats_by_experiments_without_mapping.R
+bias_by_experiments_without_mapping.txt: barcode_view_all_events_without_mapping.txt
+	$(DOCKER_RUN) R -f scripts/get_bias_by_experiments_without_mapping.R
+
+conflicts_by_experiments_with_mapping.txt: barcode_view_all_events_with_mapping.txt
+	$(DOCKER_RUN) R -f scripts/get_conflicts_by_experiments_with_mapping.R
+
+conflicts_by_experiments_without_mapping.txt: barcode_view_all_events_without_mapping.txt
+	$(DOCKER_RUN) R -f scripts/get_conflicts_by_experiments_without_mapping.R
 
 
 # Figure 2.
@@ -48,8 +54,12 @@ figures/insertions_in_repeats.pdf: $(INSERTIONS)
 	$(DOCKER_RUN) R -f scripts/plot_insertions_in_repeats.R
 
 # Figure 3.
-figures/bias.pdf: stats_by_experiments_without_mapping.txt
+figures/bias.pdf: bias_by_experiments_without_mapping.txt
 	$(DOCKER_RUN) R -f scripts/plot_bias.R
+
+# Figure 4.
+figures/conflicts.pdf: conflicts_by_experiments_without_mapping.txt
+	$(DOCKER_RUN) R -f scripts/plot_conflicts.R
 
 # Figure 6.
 figures/CRISPR_circos.pdf: misc/gRNA_counts_GT1.txt misc/gRNA_counts_GT2.txt
@@ -61,9 +71,6 @@ misc/GSE93238_gene.fpkm.txt.gz:
 
 misc/Mus_musculus.NCBIM37.67.gtf.gz:
 	cd misc && $(MAKE) Mus_musculus.NCBIM37.67.gtf.gz
-
-misc/repeats.txt.gz:
-	http://genome.ucsc.edu/cgi-bin/hgTables?hgsid=1136532115_e7pXbqSks0xwI3SrfW5vxOqxX8t1&clade=mammal&org=Mouse&db=mm9&hgta_group=varRep&hgta_track=rmsk&hgta_table=0&hgta_regionType=genome&position=&hgta_outputType=primaryTable&hgta_outFileName=repeats.txt.gz
 
 # !!!! This part still has the original FASTQ identifers !!!!
 misc/gRNA_counts_GT1.txt:

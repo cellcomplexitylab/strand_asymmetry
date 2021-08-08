@@ -1,4 +1,4 @@
-biasdat = read.delim("bias_by_experiments_without_mapping.txt")
+biasdat = read.delim("conflicts_by_experiments_without_mapping.txt")
 
 POS1 = c(1, 3.5, 6, 8.5, 11)
 names(POS1) = c("AG", "TG", "AC", "TC", "GT")
@@ -16,7 +16,7 @@ pch2 = pch1 + 15
 
 set.seed(123)
 jitter = rnorm(n=length(pos), sd=.1)
-pdf("figures/bias.pdf", useDingbats=FALSE, height=5, width=4)
+pdf("figures/conflicts.pdf", useDingbats=FALSE, height=5, width=4)
 par(mar=c(0,3.5,0,1))
 plot(pos + jitter, biasdat$x,
    ylim=c(0,1), xlim=c(.5,12.5),
