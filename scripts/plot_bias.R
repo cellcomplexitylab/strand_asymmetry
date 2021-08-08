@@ -20,7 +20,7 @@ pdf("figures/bias.pdf", useDingbats=FALSE, height=5, width=4)
 par(mar=c(0,3.5,0,1))
 plot(pos + jitter, biasdat$x,
    ylim=c(0,1), xlim=c(.5,12.5),
-   pch=pch1, col=, panel.first=grid(nx=NA, ny=NULL),
+   pch=pch1, col="gray50", panel.first=grid(nx=NA, ny=NULL),
    bty="n", xaxt="n", yaxt="n", xlab="", ylab="")
 points(pos + jitter, biasdat$x, col=col, pch=pch2)
 legend(x=9.5, y=.98, pch=c(1,2), col="grey50", text.col="grey40",

@@ -27,11 +27,17 @@ barcode_view_all_events_with_mapping.txt: $(INSERTIONS) black.lst.gz
 barcode_view_all_events_without_mapping.txt: black.lst.gz
 	$(DOCKER_RUN) /bin/bash scripts/extract_all_events_without_mapping.sh > $@
 
+barcode_view_CRISPR_without_mapping.txt: black.lst.gz
+	$(DOCKER_RUN) /bin/bash scripts/extract_CRISPR_events_without_mapping.sh > $@
+
 bias_by_experiments_with_mapping.txt: barcode_view_all_events_without_mapping.txt
 	$(DOCKER_RUN) R -f scripts/get_bias_by_experiments_with_mapping.R
 
 bias_by_experiments_without_mapping.txt: barcode_view_all_events_without_mapping.txt
 	$(DOCKER_RUN) R -f scripts/get_bias_by_experiments_without_mapping.R
+
+bias_by_CRISPR_without_mapping.txt: barcode_view_CRISPR_without_mapping.txt
+	$(DOCKER_RUN) R -f scripts/get_bias_by_CRISPR_without_mapping.R
 
 conflicts_by_experiments_with_mapping.txt: barcode_view_all_events_with_mapping.txt
 	$(DOCKER_RUN) R -f scripts/get_conflicts_by_experiments_with_mapping.R
@@ -69,6 +75,9 @@ figures/mutual_information.pdf: mutual_information.txt
 # Figure 6.
 figures/CRISPR_circos.pdf: misc/gRNA_counts_GT1.txt misc/gRNA_counts_GT2.txt
 	$(DOCKER_RUN) R -f scripts/plot_circos_CRISPR.R
+
+figures/bias_CRISPR.pdf: bias_by_CRISPR_without_mapping.txt
+	$(DOCKER_RUN) R -f scripts/plot_bias_CRISPR.R
 
 # Complementary data sets
 misc/GSE93238_gene.fpkm.txt.gz:
