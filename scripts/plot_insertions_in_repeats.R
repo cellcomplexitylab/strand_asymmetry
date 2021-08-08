@@ -33,14 +33,26 @@ grepeats = makeGRangesFromDataFrame(repeats,
    seqnames.field="genoName", start.field="genoStart",
    end.field="genoEnd")
 
-cAG = sum(countOverlaps(gAG, grepeats))
-cTG = sum(countOverlaps(gTG, grepeats))
-cAC = sum(countOverlaps(gAC, grepeats))
-cTC = sum(countOverlaps(gTC, grepeats))
-cGT = sum(countOverlaps(gGT, grepeats))
+total_AG = sum(countOverlaps(gAG, grepeats))
+total_TG = sum(countOverlaps(gTG, grepeats))
+total_AC = sum(countOverlaps(gAC, grepeats))
+total_TC = sum(countOverlaps(gTC, grepeats))
+total_GT = sum(countOverlaps(gGT, grepeats))
 
-print(c(cAG, cAG / nrow(AG)))
-print(c(cTG, cTG / nrow(TG)))
-print(c(cAC, cAC / nrow(AC)))
-print(c(cTC, cTC / nrow(TC)))
-print(c(cGT, cGT / nrow(GT)))
+ins = data.frame(
+   total    = c(total_AG, total_TG, total_AC, total_TC, total_GT),
+   fraction = c(total_AG, total_TG, total_AC, total_TC, total_GT) /
+              c(nrow(AG), nrow(TG), nrow(AC), nrow(TC), nrow(GT)))
+print(ins)
+
+COL = c("#442288", "#6CA2EA", "#B5D33D", "#FED23F", "#EB7D5B")
+
+pdf("figures/insertions_in_repeats.pdf", width=4, useDingbats=FALSE)
+par(mar=c(1,3.5,.5,.5))
+barplot(ins$fraction, col=COL, ylim=c(0,.5),
+   bty="n", xaxt="n", yaxt="n", col.lab="grey25",
+   line=2.2, ylab="Insertions in repeats")
+abline(h=(1:4)/10, lwd=2, col="white")
+axis(side=2, col="grey50", cex.axis=.8, col.axis="grey25",
+   at=(0:5)/10)
+dev.off()

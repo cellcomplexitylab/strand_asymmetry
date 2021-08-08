@@ -44,8 +44,8 @@ figures/insertion_rates.pdf: $(INSERTIONS)
 figures/spie_genes.pdf: $(INSERTIONS) misc/GSE93238_gene.fpkm.txt.gz misc/Mus_musculus.NCBIM37.67.gtf.gz
 	$(DOCKER_RUN) R -f scripts/plot_spie_genes.R
 
-show-repeats: $(INSERTIONS)
-	$(DOCKER_RUN) R -f scripts/show_insertions_in_repeats.R
+figures/insertions_in_repeats.pdf: $(INSERTIONS)
+	$(DOCKER_RUN) R -f scripts/plot_insertions_in_repeats.R
 
 # Figure 3.
 figures/bias.pdf: stats_by_experiments_without_mapping.txt
