@@ -48,6 +48,9 @@ conflicts_by_experiments_without_mapping.txt: barcode_view_all_events_without_ma
 mutual_information.txt: barcode_view_all_events_without_mapping.txt
 	$(DOCKER_RUN) python scripts/compute_mutual_info.py $< > $@
 
+barcode_view_GT_with_genic.txt: barcode_view_all_events_with_mapping.txt misc/GSE93238_gene.fpkm.txt.gz misc/Mus_musculus.NCBIM37.67.gtf.gz
+	$(DOCKER_RUN) R -f scripts/mapped_GT_events_to_genic.R
+
 # Figure 2.
 figures/integ_circos.pdf: $(INSERTIONS)
 	$(DOCKER_RUN) R -f scripts/plot_circos_integrations.R
