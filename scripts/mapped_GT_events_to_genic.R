@@ -2,7 +2,7 @@ library(GenomicRanges)
 
 GT = subset(read.table("barcode_view_all_events_with_mapping.txt"), V3 == "GT")
 
-GTins = GRanges(Rle(GT$V10), IRanges(start=GT$V12, width=1))
+gGTins = GRanges(Rle(GT$V10), IRanges(start=GT$V12, width=1))
 
 # Get expression data in mouse ES cells.
 exprs = read.delim("misc/GSE93238_gene.fpkm.txt.gz")
@@ -43,12 +43,12 @@ gENSG_hi = GRanges(Rle(ENSG_hi$chrom),
 gENSG_lo = GRanges(Rle(ENSG_lo$chrom),
       IRanges(start=ENSG_lo$start, end=ENSG_lo$end))
 
-idxlo = findOverlaps(GTins, gENSG_lo, select="arbitrary")
-idxhi = findOverlaps(GTins, gENSG_hi, select="arbitrary")
+idxlo = findOverlaps(gGTins, gENSG_lo, select="arbitrary")
+idxhi = findOverlaps(gGTins, gENSG_hi, select="arbitrary")
 
 GT$category = "intergenic"
-GT$category[idxlo] = "gene/low"
-GT$category[idxhi] = "gene/high"
+GT$category[!is.na(idxlo)] = "gene/low"
+GT$category[!is.na(idxhi)] = "gene/high"
 
 write.table(GT, file="barcode_view_GT_with_genic.txt",
    sep="\t", quote=FALSE, col.names=FALSE, row.names=FALSE)

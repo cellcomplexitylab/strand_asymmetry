@@ -30,6 +30,12 @@ barcode_view_all_events_without_mapping.txt: black.lst.gz
 barcode_view_CRISPR_without_mapping.txt: black.lst.gz
 	$(DOCKER_RUN) /bin/bash scripts/extract_CRISPR_events_without_mapping.sh > $@
 
+barcode_view_GT_with_genic.txt: barcode_view_all_events_with_mapping.txt misc/GSE93238_gene.fpkm.txt.gz misc/Mus_musculus.NCBIM37.67.gtf.gz
+	$(DOCKER_RUN) R -f scripts/mapped_GT_events_to_genic.R
+
+barcode_view_GT_with_histones.txt: barcode_view_all_events_with_mapping.txt misc/CrPs_and_hM_cM_peaks_in_0-95_probability_segments.txt.gz
+	$(DOCKER_RUN) R -f scripts/mapped_GT_events_to_histones.R
+
 bias_by_experiments_with_mapping.txt: barcode_view_all_events_without_mapping.txt
 	$(DOCKER_RUN) R -f scripts/get_bias_by_experiments_with_mapping.R
 
@@ -39,6 +45,12 @@ bias_by_experiments_without_mapping.txt: barcode_view_all_events_without_mapping
 bias_by_CRISPR_without_mapping.txt: barcode_view_CRISPR_without_mapping.txt
 	$(DOCKER_RUN) R -f scripts/get_bias_by_CRISPR_without_mapping.R
 
+bias_for_GT_by_genic.txt: barcode_view_GT_with_genic.txt
+	$(DOCKER_RUN) R -f scripts/get_bias_for_GT_by_genic.R
+
+bias_for_GT_by_histones.txt: barcode_view_GT_with_histones.txt
+	$(DOCKER_RUN) R -f scripts/get_bias_for_GT_by_histones.R
+
 conflicts_by_experiments_with_mapping.txt: barcode_view_all_events_with_mapping.txt
 	$(DOCKER_RUN) R -f scripts/get_conflicts_by_experiments_with_mapping.R
 
@@ -47,9 +59,6 @@ conflicts_by_experiments_without_mapping.txt: barcode_view_all_events_without_ma
 
 mutual_information.txt: barcode_view_all_events_without_mapping.txt
 	$(DOCKER_RUN) python scripts/compute_mutual_info.py $< > $@
-
-barcode_view_GT_with_genic.txt: barcode_view_all_events_with_mapping.txt misc/GSE93238_gene.fpkm.txt.gz misc/Mus_musculus.NCBIM37.67.gtf.gz
-	$(DOCKER_RUN) R -f scripts/mapped_GT_events_to_genic.R
 
 # Figure 2.
 figures/integ_circos.pdf: $(INSERTIONS)
@@ -75,6 +84,13 @@ figures/conflicts.pdf: conflicts_by_experiments_without_mapping.txt
 figures/mutual_information.pdf: mutual_information.txt
 	$(DOCKER_RUN) R -f scripts/plot_mutual_information.R
 
+# Figure 5.
+figures/bias_GT_genic.pdf: bias_for_GT_by_genic.txt
+	$(DOCKER_RUN) R -f scripts/plot_bias_GT_genic.R
+
+figures/bias_GT_histones.pdf: bias_for_GT_by_histones.txt
+	$(DOCKER_RUN) R -f scripts/plot_bias_GT_histones.R
+
 # Figure 6.
 figures/CRISPR_circos.pdf: misc/gRNA_counts_GT1.txt misc/gRNA_counts_GT2.txt
 	$(DOCKER_RUN) R -f scripts/plot_circos_CRISPR.R
@@ -88,6 +104,9 @@ misc/GSE93238_gene.fpkm.txt.gz:
 
 misc/Mus_musculus.NCBIM37.67.gtf.gz:
 	cd misc && $(MAKE) Mus_musculus.NCBIM37.67.gtf.gz
+
+misc/CrPs_and_hM_cM_peaks_in_0-95_probability_segments.txt.gz:
+	wget http://epistemnet.bioinfo.cnio.es/download/others/CrPs_and_hM_cM_peaks_in_0-95_probability_segments.txt.gz -O $@
 
 # !!!! This part still has the original FASTQ identifers !!!!
 misc/gRNA_counts_GT1.txt:
