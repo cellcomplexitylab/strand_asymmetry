@@ -36,6 +36,9 @@ barcode_view_GT_with_genic.txt: barcode_view_all_events_with_mapping.txt misc/GS
 barcode_view_GT_with_histones.txt: barcode_view_all_events_with_mapping.txt misc/CrPs_and_hM_cM_peaks_in_0-95_probability_segments.txt.gz
 	$(DOCKER_RUN) R -f scripts/mapped_GT_events_to_histones.R
 
+barcode_view_all_features_with_mapping.txt: barcode_view_all_events_with_mapping.txt misc/CrPs_and_hM_cM_peaks_in_0-95_probability_segments.txt.gz
+	$(DOCKER_RUN) R -f scripts/make_feature_table.R
+
 bias_by_experiments_with_mapping.txt: barcode_view_all_events_without_mapping.txt
 	$(DOCKER_RUN) R -f scripts/get_bias_by_experiments_with_mapping.R
 
