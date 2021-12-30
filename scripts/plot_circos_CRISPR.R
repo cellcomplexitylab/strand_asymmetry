@@ -7,23 +7,20 @@ source("scripts/improvedRCircos.R")
 # Keep only the first 4 columns.
 GT1 = subset(read.table("mapping/GT1.ins.gz"), V2 != "pT2")[,1:4]
 GT2 = subset(read.table("mapping/GT2.ins.gz"), V2 != "pT2")[,1:4]
+GT = rbind(GT1, GT2)
 
 gRNA_GT1 = subset(read.table("misc/gRNA_counts_GT1.txt"), V1 %in% GT1$V1)
 gRNA_GT2 = subset(read.table("misc/gRNA_counts_GT2.txt"), V1 %in% GT2$V1)
+gRNA_GT = rbind(gRNA_GT1, gRNA_GT2)
 
-colnames(GT1) = c("barcode", "chrom", "strand", "pos")
-colnames(GT2) = c("barcode", "chrom", "strand", "pos")
-colnames(gRNA_GT1) = c("barcode", "g1", "g2")
-colnames(gRNA_GT2) = c("barcode", "g1", "g2")
+colnames(GT) = c("barcode", "chrom", "strand", "pos")
+colnames(gRNA_GT) = c("barcode", "g1", "g2")
 
-GT1 = merge(GT1, gRNA_GT1)
-GT2 = merge(GT2, gRNA_GT2)
+GT = merge(GT, gRNA_GT)
 
-head(GT1)
-head(GT2)
+head(GT)
 
-gGT1 = GRanges(Rle(GT1$chrom), IRanges(start=GT1$pos, width=1))
-gGT2 = GRanges(Rle(GT2$chrom), IRanges(start=GT2$pos, width=1))
+gGT = GRanges(Rle(GT$chrom), IRanges(start=GT$pos, width=1))
 
 
 data(UCSC.Mouse.GRCm38.CytoBandIdeogram)
@@ -39,16 +36,13 @@ gGRCm38 = makeGRangesFromDataFrame(UCSC.Mouse.GRCm38.CytoBandIdeogram,
    seqnames.field="Chromosome", start.field="ChromStart",
    end.field="ChromEnd")
 
-GT1 = subset(GT1, countOverlaps(gGT1, gGRCm38) > 0)
-GT2 = subset(GT2, countOverlaps(gGT2, gGRCm38) > 0)
+GT = subset(GT, countOverlaps(gGT, gGRCm38) > 0)
 
-print(nrow(GT1))
-print(nrow(GT2))
+print(nrow(GT))
+set.seed(123)
+GT = GT[sample(nrow(GT), 1000),]
 
-
-trackGT1 = GT1[,c("chrom", "pos", "pos")]
-trackGT2 = GT2[,c("chrom", "pos", "pos")]
-
+trackGT = GT[,c("chrom", "pos", "pos")]
 
 rcircos.params = RCircos.Get.Plot.Parameters()
 rcircos.params$track.height = 0.08
@@ -72,16 +66,14 @@ colmap = function(x, y) {
    return(map[idx])
 }
 
-colGT1 = colmap(GT1$g1, GT1$g2)
-colGT2 = colmap(GT2$g1, GT2$g2)
+colGT = colmap(GT$g1, GT$g2)
 
 pdf("figures/CRISPR_circos.pdf", useDingbats=FALSE)
 par(mar=c(0,0,0,0))
 RCircos.Set.Plot.Area()
 RCircos.Draw.Chromosome.Ideogram()
 RCircos.Label.Chromosome.Names()
-Tile.Plot(trackGT1, 1, "in", col=colGT1, lwd=.5)
-Tile.Plot(trackGT2, 2, "in", col=colGT2, lwd=.5)
+Tile.Plot(trackGT, 1, "in", col=colGT, lwd=.5)
 dev.off()
 
 # Plot color map.

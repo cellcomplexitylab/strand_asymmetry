@@ -24,6 +24,9 @@ black.lst.gz: $(INSERTIONS) # $(MISMATCHES)
 barcode_view_all_events_with_mapping.txt: $(INSERTIONS) black.lst.gz
 	$(DOCKER_RUN) /bin/bash scripts/extract_all_events_with_mapping.sh > $@
 
+barcode_view_CRISPR_with_mapping.txt: mapping/GT1.ins.gz mapping/GT2.ins.gz black.lst.gz
+	$(DOCKER_RUN) /bin/bash scripts/extract_CRISPR_events_with_mapping.sh > $@
+
 barcode_view_all_events_without_mapping.txt: black.lst.gz
 	$(DOCKER_RUN) /bin/bash scripts/extract_all_events_without_mapping.sh > $@
 
@@ -33,8 +36,14 @@ barcode_view_CRISPR_without_mapping.txt: black.lst.gz
 barcode_view_GT_with_genic.txt: barcode_view_all_events_with_mapping.txt misc/GSE93238_gene.fpkm.txt.gz misc/Mus_musculus.NCBIM37.67.gtf.gz
 	$(DOCKER_RUN) R -f scripts/mapped_GT_events_to_genic.R
 
+barcode_view_CRISPR_GT_with_genic.txt: barcode_view_CRISPR_with_mapping.txt misc/GSE93238_gene.fpkm.txt.gz misc/Mus_musculus.NCBIM37.67.gtf.gz
+	$(DOCKER_RUN) R -f scripts/mapped_CRISPR_GT_events_to_genic.R
+
 barcode_view_GT_with_histones.txt: barcode_view_all_events_with_mapping.txt misc/CrPs_and_hM_cM_peaks_in_0-95_probability_segments.txt.gz
 	$(DOCKER_RUN) R -f scripts/mapped_GT_events_to_histones.R
+
+barcode_view_CRISPR_GT_with_histones.txt: barcode_view_CRISPR_with_mapping.txt misc/CrPs_and_hM_cM_peaks_in_0-95_probability_segments.txt.gz
+	$(DOCKER_RUN) R -f scripts/mapped_CRISPR_GT_events_to_histones.R
 
 barcode_view_all_features_with_mapping.txt: barcode_view_all_events_with_mapping.txt misc/CrPs_and_hM_cM_peaks_in_0-95_probability_segments.txt.gz
 	$(DOCKER_RUN) R -f scripts/make_feature_table.R
@@ -62,6 +71,9 @@ conflicts_by_experiments_without_mapping.txt: barcode_view_all_events_without_ma
 
 mutual_information.txt: barcode_view_all_events_without_mapping.txt
 	$(DOCKER_RUN) python scripts/compute_mutual_info.py $< > $@
+
+#learning_curves_full.txt: barcode_view_all_features_with_mapping.txt
+#	$(DOCKER_RUN) python scripts/compute_mutual_info.py $< > $@
 
 # Figure 2.
 figures/integ_circos.pdf: $(INSERTIONS)
@@ -93,6 +105,15 @@ figures/bias_GT_genic.pdf: bias_for_GT_by_genic.txt
 
 figures/bias_GT_histones.pdf: bias_for_GT_by_histones.txt
 	$(DOCKER_RUN) R -f scripts/plot_bias_GT_histones.R
+
+figures/learning_curves.pdf: learning_curves_full.txt learning_curves_null.txt
+	$(DOCKER_RUN) R -f scripts/plot_learning_curves.R
+
+figures/learning_curves_GC.pdf: learning_curves_GC_full.txt learning_curves_GC_null.txt
+	$(DOCKER_RUN) R -f scripts/plot_learning_curves_GC.R
+
+figures/learning_curves_conflict.pdf: learning_curves_24h-PCR_full.txt learning_curves_24h-PCR_null.txt
+	$(DOCKER_RUN) R -f scripts/plot_learning_curves_conflict.R
 
 # Figure 6.
 figures/CRISPR_circos.pdf: misc/gRNA_counts_GT1.txt misc/gRNA_counts_GT2.txt
