@@ -72,6 +72,15 @@ conflicts_by_experiments_without_mapping.txt: barcode_view_all_events_without_ma
 mutual_information.txt: barcode_view_all_events_without_mapping.txt
 	$(DOCKER_RUN) python scripts/compute_mutual_info.py $< > $@
 
+barcodes_with_meCpGs.txt: # $(MISMATCHES)
+	$(DOCKER_RUN) /bin/bash scripts/extract_barcodes_with_meCpGs.sh > $@
+
+barcodes_with_or_without_meCpGs.txt: # $(MISMATCHES)
+	$(DOCKER_RUN) /bin/bash scripts/extract_barcodes_with_or_without_meCpGs.sh > $@
+
+mappings_with_meCpG.txt mappings_without_meCpG.txt: barcodes_with_meCpGs.txt barcodes_with_or_without_meCpGs.txt
+	$(DOCKER_RUN) R -f scripts/map_barcodes.R
+
 #learning_curves_full.txt: barcode_view_all_features_with_mapping.txt
 #	$(DOCKER_RUN) python scripts/compute_mutual_info.py $< > $@
 
