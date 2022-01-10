@@ -29,10 +29,11 @@ feature_table = data.frame(
    y = ins$V2,                    # output variable
    cstr[,1:4], time, method, rep, # 7 features
    GC1, GC2, feat,                # 79 features
-   chrom=ins$V10, strand=ins$V11, pos=ins$V12, expt=ins$V13)
+   chrom=ins$V10, strand=ins$V11, pos=ins$V12, expt=ins$V13,
+   bcd = ins$V1)                  # barcode
 
 # Remove a few NAs for the G+C content.
-feature_table = subset(feature_table, complete_cases(feature_table))
+feature_table = subset(feature_table, complete.cases(feature_table))
 
 write.table(feature_table, file="barcode_view_all_features_with_mapping.txt",
    sep="\t", quote=FALSE, row.names=FALSE)

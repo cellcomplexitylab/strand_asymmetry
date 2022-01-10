@@ -13,6 +13,8 @@
 *.ins-raw.gz
 *.log
 *.map.gz
+*.pyc
 *.stc.gz
 *_seq.txt.gz
+*.txt
 *.vimtags

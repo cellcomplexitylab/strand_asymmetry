@@ -72,14 +72,17 @@ conflicts_by_experiments_without_mapping.txt: barcode_view_all_events_without_ma
 mutual_information.txt: barcode_view_all_events_without_mapping.txt
 	$(DOCKER_RUN) python scripts/compute_mutual_info.py $< > $@
 
-barcodes_with_meCpGs.txt: # $(MISMATCHES)
-	$(DOCKER_RUN) /bin/bash scripts/extract_barcodes_with_meCpGs.sh > $@
+ctrl_GT_barcodes_with_errors.txt: # $(MISMATCHES)
+	$(DOCKER_RUN) /bin/bash scripts/extract_ctrl_GT_barcodes_with_errors.sh > $@
 
-barcodes_with_or_without_meCpGs.txt: # $(MISMATCHES)
-	$(DOCKER_RUN) /bin/bash scripts/extract_barcodes_with_or_without_meCpGs.sh > $@
+all_ctrl_GT_barcodes.txt: # $(MISMATCHES)
+	$(DOCKER_RUN) /bin/bash scripts/extract_all_ctrl_GT_barcodes.sh > $@
 
-mappings_with_meCpG.txt mappings_without_meCpG.txt: barcodes_with_meCpGs.txt barcodes_with_or_without_meCpGs.txt
-	$(DOCKER_RUN) R -f scripts/map_barcodes.R
+features_ctrl_GT_barcodes.txt: ctrl_GT_barcodes_with_errors.txt all_ctrl_GT_barcodes.txt
+	$(DOCKER_RUN) R -f scripts/map_ctrl_GT_barcodes.R
+
+mutations.txt: # $(MISMATCHES)
+	$(DOCKER_RUN) /bin/bash scripts/extract_mutations.sh > $@
 
 #learning_curves_full.txt: barcode_view_all_features_with_mapping.txt
 #	$(DOCKER_RUN) python scripts/compute_mutual_info.py $< > $@
@@ -125,6 +128,13 @@ figures/learning_curves_conflict.pdf: learning_curves_24h-PCR_full.txt learning_
 	$(DOCKER_RUN) R -f scripts/plot_learning_curves_conflict.R
 
 # Figure 6.
+figures/oligo_mutations.pdf:
+	$(DOCKER_RUN) R -f scripts/plot_oligo_mutations.R
+
+figures/C_to_T_transitions.pdf:
+	$(DOCKER_RUN) R -f scripts/plot_C_to_T_transitions.R
+
+# Figure 7.
 figures/CRISPR_circos.pdf: misc/gRNA_counts_GT1.txt misc/gRNA_counts_GT2.txt
 	$(DOCKER_RUN) R -f scripts/plot_circos_CRISPR.R
 
