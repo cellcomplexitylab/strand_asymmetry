@@ -1,7 +1,8 @@
 # Introduction
 
 The present repository contains the code and the instructions to reproduce the results of the article [Strand
-asymmetry influences mismatch resolution during single-strand annealing]().
+asymmetry influences mismatch resolution during single-strand
+annealing](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-022-02665-3).
 
 
 # Requirements
